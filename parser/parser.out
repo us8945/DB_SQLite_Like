@@ -1,0 +1,2889 @@
+Created by PLY version 3.8 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> statement_list
+Rule 1     statement_list -> statement
+Rule 2     statement_list -> statement_list statement
+Rule 3     statement -> insert_statement
+Rule 4     statement -> select_statement
+Rule 5     statement -> show_statement
+Rule 6     statement -> create_table_statement
+Rule 7     statement -> delete_statement
+Rule 8     statement -> update_statement
+Rule 9     show_statement -> SHOW TABLES
+Rule 10    show_statement -> SHOW TABLES SEMI
+Rule 11    show_statement -> SHOW TABLE ID
+Rule 12    show_statement -> SHOW TABLE ID SEMI
+Rule 13    create_table_statement -> CREATE TABLE ID LPAREN create_table_column_list RPAREN
+Rule 14    create_table_statement -> CREATE TABLE ID LPAREN create_table_column_list RPAREN SEMI
+Rule 15    create_table_column_list -> create_table_column_spec COMMA create_table_column_list
+Rule 16    create_table_column_list -> create_table_column_spec
+Rule 17    create_table_column_spec -> ID data_type qualification_list
+Rule 18    create_table_column_spec -> ID data_type
+Rule 19    data_type -> INT
+Rule 20    data_type -> DOUBLE
+Rule 21    data_type -> TEXT
+Rule 22    data_type -> TINYINT
+Rule 23    data_type -> SMALLINT
+Rule 24    data_type -> BIGINT
+Rule 25    data_type -> REAL
+Rule 26    data_type -> DATETIME
+Rule 27    data_type -> DATE
+Rule 28    qualification_list -> qualification_spec qualification_list
+Rule 29    qualification_list -> qualification_spec
+Rule 30    qualification_spec -> NOT NULL
+Rule 31    qualification_spec -> PRIMARY KEY
+Rule 32    delete_statement -> DELETE FROM ID opt_where_clause
+Rule 33    delete_statement -> DELETE FROM ID opt_where_clause SEMI
+Rule 34    insert_statement -> INSERT ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN
+Rule 35    insert_statement -> INSERT ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI
+Rule 36    insert_statement -> INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN
+Rule 37    insert_statement -> INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI
+Rule 38    insert_statement -> INSERT ID VALUES LPAREN expr_list RPAREN
+Rule 39    insert_statement -> INSERT ID VALUES LPAREN expr_list RPAREN SEMI
+Rule 40    insert_statement -> INSERT INTO ID VALUES LPAREN expr_list RPAREN
+Rule 41    insert_statement -> INSERT INTO ID VALUES LPAREN expr_list RPAREN SEMI
+Rule 42    update_statement -> UPDATE ID SET asignment_list opt_where_clause
+Rule 43    update_statement -> UPDATE ID SET asignment_list opt_where_clause SEMI
+Rule 44    asignment_list -> asignment_spec COMMA asignment_list
+Rule 45    asignment_list -> asignment_spec
+Rule 46    asignment_spec -> ID EQ NUMBER
+Rule 47    asignment_spec -> ID EQ STRING
+Rule 48    select_statement -> SELECT select_columns FROM ID opt_where_clause opt_orderby_clause
+Rule 49    select_statement -> SELECT select_columns FROM ID opt_where_clause opt_orderby_clause SEMI
+Rule 50    select_columns -> TIMES
+Rule 51    select_columns -> id_list
+Rule 52    opt_where_clause -> WHERE search_condition
+Rule 53    opt_where_clause -> <empty>
+Rule 54    search_condition -> search_condition OR search_condition
+Rule 55    search_condition -> search_condition AND search_condition
+Rule 56    search_condition -> NOT search_condition
+Rule 57    search_condition -> LPAREN search_condition RPAREN
+Rule 58    search_condition -> predicate
+Rule 59    predicate -> comparison_predicate
+Rule 60    comparison_predicate -> scalar_exp EQ scalar_exp
+Rule 61    comparison_predicate -> scalar_exp NE scalar_exp
+Rule 62    comparison_predicate -> scalar_exp LT scalar_exp
+Rule 63    comparison_predicate -> scalar_exp LE scalar_exp
+Rule 64    comparison_predicate -> scalar_exp GT scalar_exp
+Rule 65    comparison_predicate -> scalar_exp GE scalar_exp
+Rule 66    scalar_exp -> scalar_exp PLUS scalar_exp
+Rule 67    scalar_exp -> scalar_exp MINUS scalar_exp
+Rule 68    scalar_exp -> scalar_exp TIMES scalar_exp
+Rule 69    scalar_exp -> scalar_exp DIVIDE scalar_exp
+Rule 70    scalar_exp -> atom
+Rule 71    scalar_exp -> LPAREN scalar_exp RPAREN
+Rule 72    atom -> NUMBER
+Rule 73    atom -> ID
+Rule 74    atom -> STRING
+Rule 75    opt_orderby_clause -> ORDER BY ID
+Rule 76    opt_orderby_clause -> <empty>
+Rule 77    id_list -> ID
+Rule 78    id_list -> id_list COMMA ID
+Rule 79    expr_list -> expr
+Rule 80    expr_list -> expr_list COMMA expr
+Rule 81    expr -> expr PLUS term
+Rule 82    expr -> expr MINUS term
+Rule 83    expr -> term
+Rule 84    expr -> ID
+Rule 85    expr -> STRING
+Rule 86    term -> term TIMES factor
+Rule 87    term -> term DIVIDE factor
+Rule 88    term -> factor
+Rule 89    factor -> NUMBER
+Rule 90    factor -> LPAREN expr RPAREN
+
+Terminals, with rules where they appear
+
+AND                  : 55
+BIGINT               : 24
+BY                   : 75
+COMMA                : 15 44 78 80
+CREATE               : 13 14
+DATE                 : 27
+DATETIME             : 26
+DELETE               : 32 33
+DIVIDE               : 69 87
+DOUBLE               : 20
+EQ                   : 46 47 60
+FROM                 : 32 33 48 49
+GE                   : 65
+GT                   : 64
+ID                   : 11 12 13 14 17 18 32 33 34 35 36 37 38 39 40 41 42 43 46 47 48 49 73 75 77 78 84
+INSERT               : 34 35 36 37 38 39 40 41
+INT                  : 19
+INTO                 : 36 37 40 41
+KEY                  : 31
+LE                   : 63
+LPAREN               : 13 14 34 34 35 35 36 36 37 37 38 39 40 41 57 71 90
+LT                   : 62
+MINUS                : 67 82
+NE                   : 61
+NOT                  : 30 56
+NULL                 : 30
+NUMBER               : 46 72 89
+OR                   : 54
+ORDER                : 75
+PLUS                 : 66 81
+PRIMARY              : 31
+REAL                 : 25
+RPAREN               : 13 14 34 34 35 35 36 36 37 37 38 39 40 41 57 71 90
+SELECT               : 48 49
+SEMI                 : 10 12 14 33 35 37 39 41 43 49
+SET                  : 42 43
+SHOW                 : 9 10 11 12
+SMALLINT             : 23
+STRING               : 47 74 85
+TABLE                : 11 12 13 14
+TABLES               : 9 10
+TEXT                 : 21
+TIMES                : 50 68 86
+TINYINT              : 22
+UPDATE               : 42 43
+VALUES               : 34 35 36 37 38 39 40 41
+WHERE                : 52
+error                : 
+
+Nonterminals, with rules where they appear
+
+asignment_list       : 42 43 44
+asignment_spec       : 44 45
+atom                 : 70
+comparison_predicate : 59
+create_table_column_list : 13 14 15
+create_table_column_spec : 15 16
+create_table_statement : 6
+data_type            : 17 18
+delete_statement     : 7
+expr                 : 79 80 81 82 90
+expr_list            : 34 35 36 37 38 39 40 41 80
+factor               : 86 87 88
+id_list              : 34 35 36 37 51 78
+insert_statement     : 3
+opt_orderby_clause   : 48 49
+opt_where_clause     : 32 33 42 43 48 49
+predicate            : 58
+qualification_list   : 17 28
+qualification_spec   : 28 29
+scalar_exp           : 60 60 61 61 62 62 63 63 64 64 65 65 66 66 67 67 68 68 69 69 71
+search_condition     : 52 54 54 55 55 56 57
+select_columns       : 48 49
+select_statement     : 4
+show_statement       : 5
+statement            : 1 2
+statement_list       : 2 0
+term                 : 81 82 83 86 87
+update_statement     : 8
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . statement_list
+    (1) statement_list -> . statement
+    (2) statement_list -> . statement_list statement
+    (3) statement -> . insert_statement
+    (4) statement -> . select_statement
+    (5) statement -> . show_statement
+    (6) statement -> . create_table_statement
+    (7) statement -> . delete_statement
+    (8) statement -> . update_statement
+    (34) insert_statement -> . INSERT ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN
+    (35) insert_statement -> . INSERT ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI
+    (36) insert_statement -> . INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN
+    (37) insert_statement -> . INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI
+    (38) insert_statement -> . INSERT ID VALUES LPAREN expr_list RPAREN
+    (39) insert_statement -> . INSERT ID VALUES LPAREN expr_list RPAREN SEMI
+    (40) insert_statement -> . INSERT INTO ID VALUES LPAREN expr_list RPAREN
+    (41) insert_statement -> . INSERT INTO ID VALUES LPAREN expr_list RPAREN SEMI
+    (48) select_statement -> . SELECT select_columns FROM ID opt_where_clause opt_orderby_clause
+    (49) select_statement -> . SELECT select_columns FROM ID opt_where_clause opt_orderby_clause SEMI
+    (9) show_statement -> . SHOW TABLES
+    (10) show_statement -> . SHOW TABLES SEMI
+    (11) show_statement -> . SHOW TABLE ID
+    (12) show_statement -> . SHOW TABLE ID SEMI
+    (13) create_table_statement -> . CREATE TABLE ID LPAREN create_table_column_list RPAREN
+    (14) create_table_statement -> . CREATE TABLE ID LPAREN create_table_column_list RPAREN SEMI
+    (32) delete_statement -> . DELETE FROM ID opt_where_clause
+    (33) delete_statement -> . DELETE FROM ID opt_where_clause SEMI
+    (42) update_statement -> . UPDATE ID SET asignment_list opt_where_clause
+    (43) update_statement -> . UPDATE ID SET asignment_list opt_where_clause SEMI
+
+    INSERT          shift and go to state 13
+    SELECT          shift and go to state 14
+    SHOW            shift and go to state 9
+    CREATE          shift and go to state 5
+    DELETE          shift and go to state 11
+    UPDATE          shift and go to state 1
+
+    insert_statement               shift and go to state 8
+    create_table_statement         shift and go to state 2
+    select_statement               shift and go to state 3
+    statement                      shift and go to state 4
+    show_statement                 shift and go to state 10
+    delete_statement               shift and go to state 12
+    statement_list                 shift and go to state 6
+    update_statement               shift and go to state 7
+
+state 1
+
+    (42) update_statement -> UPDATE . ID SET asignment_list opt_where_clause
+    (43) update_statement -> UPDATE . ID SET asignment_list opt_where_clause SEMI
+
+    ID              shift and go to state 15
+
+
+state 2
+
+    (6) statement -> create_table_statement .
+
+    INSERT          reduce using rule 6 (statement -> create_table_statement .)
+    SELECT          reduce using rule 6 (statement -> create_table_statement .)
+    SHOW            reduce using rule 6 (statement -> create_table_statement .)
+    CREATE          reduce using rule 6 (statement -> create_table_statement .)
+    DELETE          reduce using rule 6 (statement -> create_table_statement .)
+    UPDATE          reduce using rule 6 (statement -> create_table_statement .)
+    $end            reduce using rule 6 (statement -> create_table_statement .)
+
+
+state 3
+
+    (4) statement -> select_statement .
+
+    INSERT          reduce using rule 4 (statement -> select_statement .)
+    SELECT          reduce using rule 4 (statement -> select_statement .)
+    SHOW            reduce using rule 4 (statement -> select_statement .)
+    CREATE          reduce using rule 4 (statement -> select_statement .)
+    DELETE          reduce using rule 4 (statement -> select_statement .)
+    UPDATE          reduce using rule 4 (statement -> select_statement .)
+    $end            reduce using rule 4 (statement -> select_statement .)
+
+
+state 4
+
+    (1) statement_list -> statement .
+
+    INSERT          reduce using rule 1 (statement_list -> statement .)
+    SELECT          reduce using rule 1 (statement_list -> statement .)
+    SHOW            reduce using rule 1 (statement_list -> statement .)
+    CREATE          reduce using rule 1 (statement_list -> statement .)
+    DELETE          reduce using rule 1 (statement_list -> statement .)
+    UPDATE          reduce using rule 1 (statement_list -> statement .)
+    $end            reduce using rule 1 (statement_list -> statement .)
+
+
+state 5
+
+    (13) create_table_statement -> CREATE . TABLE ID LPAREN create_table_column_list RPAREN
+    (14) create_table_statement -> CREATE . TABLE ID LPAREN create_table_column_list RPAREN SEMI
+
+    TABLE           shift and go to state 16
+
+
+state 6
+
+    (0) S' -> statement_list .
+    (2) statement_list -> statement_list . statement
+    (3) statement -> . insert_statement
+    (4) statement -> . select_statement
+    (5) statement -> . show_statement
+    (6) statement -> . create_table_statement
+    (7) statement -> . delete_statement
+    (8) statement -> . update_statement
+    (34) insert_statement -> . INSERT ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN
+    (35) insert_statement -> . INSERT ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI
+    (36) insert_statement -> . INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN
+    (37) insert_statement -> . INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI
+    (38) insert_statement -> . INSERT ID VALUES LPAREN expr_list RPAREN
+    (39) insert_statement -> . INSERT ID VALUES LPAREN expr_list RPAREN SEMI
+    (40) insert_statement -> . INSERT INTO ID VALUES LPAREN expr_list RPAREN
+    (41) insert_statement -> . INSERT INTO ID VALUES LPAREN expr_list RPAREN SEMI
+    (48) select_statement -> . SELECT select_columns FROM ID opt_where_clause opt_orderby_clause
+    (49) select_statement -> . SELECT select_columns FROM ID opt_where_clause opt_orderby_clause SEMI
+    (9) show_statement -> . SHOW TABLES
+    (10) show_statement -> . SHOW TABLES SEMI
+    (11) show_statement -> . SHOW TABLE ID
+    (12) show_statement -> . SHOW TABLE ID SEMI
+    (13) create_table_statement -> . CREATE TABLE ID LPAREN create_table_column_list RPAREN
+    (14) create_table_statement -> . CREATE TABLE ID LPAREN create_table_column_list RPAREN SEMI
+    (32) delete_statement -> . DELETE FROM ID opt_where_clause
+    (33) delete_statement -> . DELETE FROM ID opt_where_clause SEMI
+    (42) update_statement -> . UPDATE ID SET asignment_list opt_where_clause
+    (43) update_statement -> . UPDATE ID SET asignment_list opt_where_clause SEMI
+
+    INSERT          shift and go to state 13
+    SELECT          shift and go to state 14
+    SHOW            shift and go to state 9
+    CREATE          shift and go to state 5
+    DELETE          shift and go to state 11
+    UPDATE          shift and go to state 1
+
+    insert_statement               shift and go to state 8
+    create_table_statement         shift and go to state 2
+    select_statement               shift and go to state 3
+    statement                      shift and go to state 17
+    show_statement                 shift and go to state 10
+    delete_statement               shift and go to state 12
+    update_statement               shift and go to state 7
+
+state 7
+
+    (8) statement -> update_statement .
+
+    INSERT          reduce using rule 8 (statement -> update_statement .)
+    SELECT          reduce using rule 8 (statement -> update_statement .)
+    SHOW            reduce using rule 8 (statement -> update_statement .)
+    CREATE          reduce using rule 8 (statement -> update_statement .)
+    DELETE          reduce using rule 8 (statement -> update_statement .)
+    UPDATE          reduce using rule 8 (statement -> update_statement .)
+    $end            reduce using rule 8 (statement -> update_statement .)
+
+
+state 8
+
+    (3) statement -> insert_statement .
+
+    INSERT          reduce using rule 3 (statement -> insert_statement .)
+    SELECT          reduce using rule 3 (statement -> insert_statement .)
+    SHOW            reduce using rule 3 (statement -> insert_statement .)
+    CREATE          reduce using rule 3 (statement -> insert_statement .)
+    DELETE          reduce using rule 3 (statement -> insert_statement .)
+    UPDATE          reduce using rule 3 (statement -> insert_statement .)
+    $end            reduce using rule 3 (statement -> insert_statement .)
+
+
+state 9
+
+    (9) show_statement -> SHOW . TABLES
+    (10) show_statement -> SHOW . TABLES SEMI
+    (11) show_statement -> SHOW . TABLE ID
+    (12) show_statement -> SHOW . TABLE ID SEMI
+
+    TABLES          shift and go to state 18
+    TABLE           shift and go to state 19
+
+
+state 10
+
+    (5) statement -> show_statement .
+
+    INSERT          reduce using rule 5 (statement -> show_statement .)
+    SELECT          reduce using rule 5 (statement -> show_statement .)
+    SHOW            reduce using rule 5 (statement -> show_statement .)
+    CREATE          reduce using rule 5 (statement -> show_statement .)
+    DELETE          reduce using rule 5 (statement -> show_statement .)
+    UPDATE          reduce using rule 5 (statement -> show_statement .)
+    $end            reduce using rule 5 (statement -> show_statement .)
+
+
+state 11
+
+    (32) delete_statement -> DELETE . FROM ID opt_where_clause
+    (33) delete_statement -> DELETE . FROM ID opt_where_clause SEMI
+
+    FROM            shift and go to state 20
+
+
+state 12
+
+    (7) statement -> delete_statement .
+
+    INSERT          reduce using rule 7 (statement -> delete_statement .)
+    SELECT          reduce using rule 7 (statement -> delete_statement .)
+    SHOW            reduce using rule 7 (statement -> delete_statement .)
+    CREATE          reduce using rule 7 (statement -> delete_statement .)
+    DELETE          reduce using rule 7 (statement -> delete_statement .)
+    UPDATE          reduce using rule 7 (statement -> delete_statement .)
+    $end            reduce using rule 7 (statement -> delete_statement .)
+
+
+state 13
+
+    (34) insert_statement -> INSERT . ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN
+    (35) insert_statement -> INSERT . ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI
+    (36) insert_statement -> INSERT . INTO ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN
+    (37) insert_statement -> INSERT . INTO ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI
+    (38) insert_statement -> INSERT . ID VALUES LPAREN expr_list RPAREN
+    (39) insert_statement -> INSERT . ID VALUES LPAREN expr_list RPAREN SEMI
+    (40) insert_statement -> INSERT . INTO ID VALUES LPAREN expr_list RPAREN
+    (41) insert_statement -> INSERT . INTO ID VALUES LPAREN expr_list RPAREN SEMI
+
+    ID              shift and go to state 21
+    INTO            shift and go to state 22
+
+
+state 14
+
+    (48) select_statement -> SELECT . select_columns FROM ID opt_where_clause opt_orderby_clause
+    (49) select_statement -> SELECT . select_columns FROM ID opt_where_clause opt_orderby_clause SEMI
+    (50) select_columns -> . TIMES
+    (51) select_columns -> . id_list
+    (77) id_list -> . ID
+    (78) id_list -> . id_list COMMA ID
+
+    TIMES           shift and go to state 24
+    ID              shift and go to state 23
+
+    id_list                        shift and go to state 26
+    select_columns                 shift and go to state 25
+
+state 15
+
+    (42) update_statement -> UPDATE ID . SET asignment_list opt_where_clause
+    (43) update_statement -> UPDATE ID . SET asignment_list opt_where_clause SEMI
+
+    SET             shift and go to state 27
+
+
+state 16
+
+    (13) create_table_statement -> CREATE TABLE . ID LPAREN create_table_column_list RPAREN
+    (14) create_table_statement -> CREATE TABLE . ID LPAREN create_table_column_list RPAREN SEMI
+
+    ID              shift and go to state 28
+
+
+state 17
+
+    (2) statement_list -> statement_list statement .
+
+    INSERT          reduce using rule 2 (statement_list -> statement_list statement .)
+    SELECT          reduce using rule 2 (statement_list -> statement_list statement .)
+    SHOW            reduce using rule 2 (statement_list -> statement_list statement .)
+    CREATE          reduce using rule 2 (statement_list -> statement_list statement .)
+    DELETE          reduce using rule 2 (statement_list -> statement_list statement .)
+    UPDATE          reduce using rule 2 (statement_list -> statement_list statement .)
+    $end            reduce using rule 2 (statement_list -> statement_list statement .)
+
+
+state 18
+
+    (9) show_statement -> SHOW TABLES .
+    (10) show_statement -> SHOW TABLES . SEMI
+
+    INSERT          reduce using rule 9 (show_statement -> SHOW TABLES .)
+    SELECT          reduce using rule 9 (show_statement -> SHOW TABLES .)
+    SHOW            reduce using rule 9 (show_statement -> SHOW TABLES .)
+    CREATE          reduce using rule 9 (show_statement -> SHOW TABLES .)
+    DELETE          reduce using rule 9 (show_statement -> SHOW TABLES .)
+    UPDATE          reduce using rule 9 (show_statement -> SHOW TABLES .)
+    $end            reduce using rule 9 (show_statement -> SHOW TABLES .)
+    SEMI            shift and go to state 29
+
+
+state 19
+
+    (11) show_statement -> SHOW TABLE . ID
+    (12) show_statement -> SHOW TABLE . ID SEMI
+
+    ID              shift and go to state 30
+
+
+state 20
+
+    (32) delete_statement -> DELETE FROM . ID opt_where_clause
+    (33) delete_statement -> DELETE FROM . ID opt_where_clause SEMI
+
+    ID              shift and go to state 31
+
+
+state 21
+
+    (34) insert_statement -> INSERT ID . LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN
+    (35) insert_statement -> INSERT ID . LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI
+    (38) insert_statement -> INSERT ID . VALUES LPAREN expr_list RPAREN
+    (39) insert_statement -> INSERT ID . VALUES LPAREN expr_list RPAREN SEMI
+
+    LPAREN          shift and go to state 33
+    VALUES          shift and go to state 32
+
+
+state 22
+
+    (36) insert_statement -> INSERT INTO . ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN
+    (37) insert_statement -> INSERT INTO . ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI
+    (40) insert_statement -> INSERT INTO . ID VALUES LPAREN expr_list RPAREN
+    (41) insert_statement -> INSERT INTO . ID VALUES LPAREN expr_list RPAREN SEMI
+
+    ID              shift and go to state 34
+
+
+state 23
+
+    (77) id_list -> ID .
+
+    COMMA           reduce using rule 77 (id_list -> ID .)
+    FROM            reduce using rule 77 (id_list -> ID .)
+    RPAREN          reduce using rule 77 (id_list -> ID .)
+
+
+state 24
+
+    (50) select_columns -> TIMES .
+
+    FROM            reduce using rule 50 (select_columns -> TIMES .)
+
+
+state 25
+
+    (48) select_statement -> SELECT select_columns . FROM ID opt_where_clause opt_orderby_clause
+    (49) select_statement -> SELECT select_columns . FROM ID opt_where_clause opt_orderby_clause SEMI
+
+    FROM            shift and go to state 35
+
+
+state 26
+
+    (51) select_columns -> id_list .
+    (78) id_list -> id_list . COMMA ID
+
+    FROM            reduce using rule 51 (select_columns -> id_list .)
+    COMMA           shift and go to state 36
+
+
+state 27
+
+    (42) update_statement -> UPDATE ID SET . asignment_list opt_where_clause
+    (43) update_statement -> UPDATE ID SET . asignment_list opt_where_clause SEMI
+    (44) asignment_list -> . asignment_spec COMMA asignment_list
+    (45) asignment_list -> . asignment_spec
+    (46) asignment_spec -> . ID EQ NUMBER
+    (47) asignment_spec -> . ID EQ STRING
+
+    ID              shift and go to state 37
+
+    asignment_list                 shift and go to state 38
+    asignment_spec                 shift and go to state 39
+
+state 28
+
+    (13) create_table_statement -> CREATE TABLE ID . LPAREN create_table_column_list RPAREN
+    (14) create_table_statement -> CREATE TABLE ID . LPAREN create_table_column_list RPAREN SEMI
+
+    LPAREN          shift and go to state 40
+
+
+state 29
+
+    (10) show_statement -> SHOW TABLES SEMI .
+
+    INSERT          reduce using rule 10 (show_statement -> SHOW TABLES SEMI .)
+    SELECT          reduce using rule 10 (show_statement -> SHOW TABLES SEMI .)
+    SHOW            reduce using rule 10 (show_statement -> SHOW TABLES SEMI .)
+    CREATE          reduce using rule 10 (show_statement -> SHOW TABLES SEMI .)
+    DELETE          reduce using rule 10 (show_statement -> SHOW TABLES SEMI .)
+    UPDATE          reduce using rule 10 (show_statement -> SHOW TABLES SEMI .)
+    $end            reduce using rule 10 (show_statement -> SHOW TABLES SEMI .)
+
+
+state 30
+
+    (11) show_statement -> SHOW TABLE ID .
+    (12) show_statement -> SHOW TABLE ID . SEMI
+
+    INSERT          reduce using rule 11 (show_statement -> SHOW TABLE ID .)
+    SELECT          reduce using rule 11 (show_statement -> SHOW TABLE ID .)
+    SHOW            reduce using rule 11 (show_statement -> SHOW TABLE ID .)
+    CREATE          reduce using rule 11 (show_statement -> SHOW TABLE ID .)
+    DELETE          reduce using rule 11 (show_statement -> SHOW TABLE ID .)
+    UPDATE          reduce using rule 11 (show_statement -> SHOW TABLE ID .)
+    $end            reduce using rule 11 (show_statement -> SHOW TABLE ID .)
+    SEMI            shift and go to state 41
+
+
+state 31
+
+    (32) delete_statement -> DELETE FROM ID . opt_where_clause
+    (33) delete_statement -> DELETE FROM ID . opt_where_clause SEMI
+    (52) opt_where_clause -> . WHERE search_condition
+    (53) opt_where_clause -> .
+
+    WHERE           shift and go to state 43
+    SEMI            reduce using rule 53 (opt_where_clause -> .)
+    INSERT          reduce using rule 53 (opt_where_clause -> .)
+    SELECT          reduce using rule 53 (opt_where_clause -> .)
+    SHOW            reduce using rule 53 (opt_where_clause -> .)
+    CREATE          reduce using rule 53 (opt_where_clause -> .)
+    DELETE          reduce using rule 53 (opt_where_clause -> .)
+    UPDATE          reduce using rule 53 (opt_where_clause -> .)
+    $end            reduce using rule 53 (opt_where_clause -> .)
+
+    opt_where_clause               shift and go to state 42
+
+state 32
+
+    (38) insert_statement -> INSERT ID VALUES . LPAREN expr_list RPAREN
+    (39) insert_statement -> INSERT ID VALUES . LPAREN expr_list RPAREN SEMI
+
+    LPAREN          shift and go to state 44
+
+
+state 33
+
+    (34) insert_statement -> INSERT ID LPAREN . id_list RPAREN VALUES LPAREN expr_list RPAREN
+    (35) insert_statement -> INSERT ID LPAREN . id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI
+    (77) id_list -> . ID
+    (78) id_list -> . id_list COMMA ID
+
+    ID              shift and go to state 23
+
+    id_list                        shift and go to state 45
+
+state 34
+
+    (36) insert_statement -> INSERT INTO ID . LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN
+    (37) insert_statement -> INSERT INTO ID . LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI
+    (40) insert_statement -> INSERT INTO ID . VALUES LPAREN expr_list RPAREN
+    (41) insert_statement -> INSERT INTO ID . VALUES LPAREN expr_list RPAREN SEMI
+
+    LPAREN          shift and go to state 47
+    VALUES          shift and go to state 46
+
+
+state 35
+
+    (48) select_statement -> SELECT select_columns FROM . ID opt_where_clause opt_orderby_clause
+    (49) select_statement -> SELECT select_columns FROM . ID opt_where_clause opt_orderby_clause SEMI
+
+    ID              shift and go to state 48
+
+
+state 36
+
+    (78) id_list -> id_list COMMA . ID
+
+    ID              shift and go to state 49
+
+
+state 37
+
+    (46) asignment_spec -> ID . EQ NUMBER
+    (47) asignment_spec -> ID . EQ STRING
+
+    EQ              shift and go to state 50
+
+
+state 38
+
+    (42) update_statement -> UPDATE ID SET asignment_list . opt_where_clause
+    (43) update_statement -> UPDATE ID SET asignment_list . opt_where_clause SEMI
+    (52) opt_where_clause -> . WHERE search_condition
+    (53) opt_where_clause -> .
+
+    WHERE           shift and go to state 43
+    SEMI            reduce using rule 53 (opt_where_clause -> .)
+    INSERT          reduce using rule 53 (opt_where_clause -> .)
+    SELECT          reduce using rule 53 (opt_where_clause -> .)
+    SHOW            reduce using rule 53 (opt_where_clause -> .)
+    CREATE          reduce using rule 53 (opt_where_clause -> .)
+    DELETE          reduce using rule 53 (opt_where_clause -> .)
+    UPDATE          reduce using rule 53 (opt_where_clause -> .)
+    $end            reduce using rule 53 (opt_where_clause -> .)
+
+    opt_where_clause               shift and go to state 51
+
+state 39
+
+    (44) asignment_list -> asignment_spec . COMMA asignment_list
+    (45) asignment_list -> asignment_spec .
+
+    COMMA           shift and go to state 52
+    WHERE           reduce using rule 45 (asignment_list -> asignment_spec .)
+    SEMI            reduce using rule 45 (asignment_list -> asignment_spec .)
+    INSERT          reduce using rule 45 (asignment_list -> asignment_spec .)
+    SELECT          reduce using rule 45 (asignment_list -> asignment_spec .)
+    SHOW            reduce using rule 45 (asignment_list -> asignment_spec .)
+    CREATE          reduce using rule 45 (asignment_list -> asignment_spec .)
+    DELETE          reduce using rule 45 (asignment_list -> asignment_spec .)
+    UPDATE          reduce using rule 45 (asignment_list -> asignment_spec .)
+    $end            reduce using rule 45 (asignment_list -> asignment_spec .)
+
+
+state 40
+
+    (13) create_table_statement -> CREATE TABLE ID LPAREN . create_table_column_list RPAREN
+    (14) create_table_statement -> CREATE TABLE ID LPAREN . create_table_column_list RPAREN SEMI
+    (15) create_table_column_list -> . create_table_column_spec COMMA create_table_column_list
+    (16) create_table_column_list -> . create_table_column_spec
+    (17) create_table_column_spec -> . ID data_type qualification_list
+    (18) create_table_column_spec -> . ID data_type
+
+    ID              shift and go to state 53
+
+    create_table_column_spec       shift and go to state 54
+    create_table_column_list       shift and go to state 55
+
+state 41
+
+    (12) show_statement -> SHOW TABLE ID SEMI .
+
+    INSERT          reduce using rule 12 (show_statement -> SHOW TABLE ID SEMI .)
+    SELECT          reduce using rule 12 (show_statement -> SHOW TABLE ID SEMI .)
+    SHOW            reduce using rule 12 (show_statement -> SHOW TABLE ID SEMI .)
+    CREATE          reduce using rule 12 (show_statement -> SHOW TABLE ID SEMI .)
+    DELETE          reduce using rule 12 (show_statement -> SHOW TABLE ID SEMI .)
+    UPDATE          reduce using rule 12 (show_statement -> SHOW TABLE ID SEMI .)
+    $end            reduce using rule 12 (show_statement -> SHOW TABLE ID SEMI .)
+
+
+state 42
+
+    (32) delete_statement -> DELETE FROM ID opt_where_clause .
+    (33) delete_statement -> DELETE FROM ID opt_where_clause . SEMI
+
+    INSERT          reduce using rule 32 (delete_statement -> DELETE FROM ID opt_where_clause .)
+    SELECT          reduce using rule 32 (delete_statement -> DELETE FROM ID opt_where_clause .)
+    SHOW            reduce using rule 32 (delete_statement -> DELETE FROM ID opt_where_clause .)
+    CREATE          reduce using rule 32 (delete_statement -> DELETE FROM ID opt_where_clause .)
+    DELETE          reduce using rule 32 (delete_statement -> DELETE FROM ID opt_where_clause .)
+    UPDATE          reduce using rule 32 (delete_statement -> DELETE FROM ID opt_where_clause .)
+    $end            reduce using rule 32 (delete_statement -> DELETE FROM ID opt_where_clause .)
+    SEMI            shift and go to state 56
+
+
+state 43
+
+    (52) opt_where_clause -> WHERE . search_condition
+    (54) search_condition -> . search_condition OR search_condition
+    (55) search_condition -> . search_condition AND search_condition
+    (56) search_condition -> . NOT search_condition
+    (57) search_condition -> . LPAREN search_condition RPAREN
+    (58) search_condition -> . predicate
+    (59) predicate -> . comparison_predicate
+    (60) comparison_predicate -> . scalar_exp EQ scalar_exp
+    (61) comparison_predicate -> . scalar_exp NE scalar_exp
+    (62) comparison_predicate -> . scalar_exp LT scalar_exp
+    (63) comparison_predicate -> . scalar_exp LE scalar_exp
+    (64) comparison_predicate -> . scalar_exp GT scalar_exp
+    (65) comparison_predicate -> . scalar_exp GE scalar_exp
+    (66) scalar_exp -> . scalar_exp PLUS scalar_exp
+    (67) scalar_exp -> . scalar_exp MINUS scalar_exp
+    (68) scalar_exp -> . scalar_exp TIMES scalar_exp
+    (69) scalar_exp -> . scalar_exp DIVIDE scalar_exp
+    (70) scalar_exp -> . atom
+    (71) scalar_exp -> . LPAREN scalar_exp RPAREN
+    (72) atom -> . NUMBER
+    (73) atom -> . ID
+    (74) atom -> . STRING
+
+    NOT             shift and go to state 57
+    LPAREN          shift and go to state 59
+    NUMBER          shift and go to state 64
+    ID              shift and go to state 58
+    STRING          shift and go to state 66
+
+    atom                           shift and go to state 63
+    scalar_exp                     shift and go to state 61
+    comparison_predicate           shift and go to state 62
+    search_condition               shift and go to state 65
+    predicate                      shift and go to state 60
+
+state 44
+
+    (38) insert_statement -> INSERT ID VALUES LPAREN . expr_list RPAREN
+    (39) insert_statement -> INSERT ID VALUES LPAREN . expr_list RPAREN SEMI
+    (79) expr_list -> . expr
+    (80) expr_list -> . expr_list COMMA expr
+    (81) expr -> . expr PLUS term
+    (82) expr -> . expr MINUS term
+    (83) expr -> . term
+    (84) expr -> . ID
+    (85) expr -> . STRING
+    (86) term -> . term TIMES factor
+    (87) term -> . term DIVIDE factor
+    (88) term -> . factor
+    (89) factor -> . NUMBER
+    (90) factor -> . LPAREN expr RPAREN
+
+    ID              shift and go to state 69
+    STRING          shift and go to state 74
+    NUMBER          shift and go to state 72
+    LPAREN          shift and go to state 71
+
+    expr                           shift and go to state 68
+    term                           shift and go to state 67
+    expr_list                      shift and go to state 70
+    factor                         shift and go to state 73
+
+state 45
+
+    (34) insert_statement -> INSERT ID LPAREN id_list . RPAREN VALUES LPAREN expr_list RPAREN
+    (35) insert_statement -> INSERT ID LPAREN id_list . RPAREN VALUES LPAREN expr_list RPAREN SEMI
+    (78) id_list -> id_list . COMMA ID
+
+    RPAREN          shift and go to state 75
+    COMMA           shift and go to state 36
+
+
+state 46
+
+    (40) insert_statement -> INSERT INTO ID VALUES . LPAREN expr_list RPAREN
+    (41) insert_statement -> INSERT INTO ID VALUES . LPAREN expr_list RPAREN SEMI
+
+    LPAREN          shift and go to state 76
+
+
+state 47
+
+    (36) insert_statement -> INSERT INTO ID LPAREN . id_list RPAREN VALUES LPAREN expr_list RPAREN
+    (37) insert_statement -> INSERT INTO ID LPAREN . id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI
+    (77) id_list -> . ID
+    (78) id_list -> . id_list COMMA ID
+
+    ID              shift and go to state 23
+
+    id_list                        shift and go to state 77
+
+state 48
+
+    (48) select_statement -> SELECT select_columns FROM ID . opt_where_clause opt_orderby_clause
+    (49) select_statement -> SELECT select_columns FROM ID . opt_where_clause opt_orderby_clause SEMI
+    (52) opt_where_clause -> . WHERE search_condition
+    (53) opt_where_clause -> .
+
+    WHERE           shift and go to state 43
+    ORDER           reduce using rule 53 (opt_where_clause -> .)
+    SEMI            reduce using rule 53 (opt_where_clause -> .)
+    INSERT          reduce using rule 53 (opt_where_clause -> .)
+    SELECT          reduce using rule 53 (opt_where_clause -> .)
+    SHOW            reduce using rule 53 (opt_where_clause -> .)
+    CREATE          reduce using rule 53 (opt_where_clause -> .)
+    DELETE          reduce using rule 53 (opt_where_clause -> .)
+    UPDATE          reduce using rule 53 (opt_where_clause -> .)
+    $end            reduce using rule 53 (opt_where_clause -> .)
+
+    opt_where_clause               shift and go to state 78
+
+state 49
+
+    (78) id_list -> id_list COMMA ID .
+
+    COMMA           reduce using rule 78 (id_list -> id_list COMMA ID .)
+    FROM            reduce using rule 78 (id_list -> id_list COMMA ID .)
+    RPAREN          reduce using rule 78 (id_list -> id_list COMMA ID .)
+
+
+state 50
+
+    (46) asignment_spec -> ID EQ . NUMBER
+    (47) asignment_spec -> ID EQ . STRING
+
+    NUMBER          shift and go to state 79
+    STRING          shift and go to state 80
+
+
+state 51
+
+    (42) update_statement -> UPDATE ID SET asignment_list opt_where_clause .
+    (43) update_statement -> UPDATE ID SET asignment_list opt_where_clause . SEMI
+
+    INSERT          reduce using rule 42 (update_statement -> UPDATE ID SET asignment_list opt_where_clause .)
+    SELECT          reduce using rule 42 (update_statement -> UPDATE ID SET asignment_list opt_where_clause .)
+    SHOW            reduce using rule 42 (update_statement -> UPDATE ID SET asignment_list opt_where_clause .)
+    CREATE          reduce using rule 42 (update_statement -> UPDATE ID SET asignment_list opt_where_clause .)
+    DELETE          reduce using rule 42 (update_statement -> UPDATE ID SET asignment_list opt_where_clause .)
+    UPDATE          reduce using rule 42 (update_statement -> UPDATE ID SET asignment_list opt_where_clause .)
+    $end            reduce using rule 42 (update_statement -> UPDATE ID SET asignment_list opt_where_clause .)
+    SEMI            shift and go to state 81
+
+
+state 52
+
+    (44) asignment_list -> asignment_spec COMMA . asignment_list
+    (44) asignment_list -> . asignment_spec COMMA asignment_list
+    (45) asignment_list -> . asignment_spec
+    (46) asignment_spec -> . ID EQ NUMBER
+    (47) asignment_spec -> . ID EQ STRING
+
+    ID              shift and go to state 37
+
+    asignment_spec                 shift and go to state 39
+    asignment_list                 shift and go to state 82
+
+state 53
+
+    (17) create_table_column_spec -> ID . data_type qualification_list
+    (18) create_table_column_spec -> ID . data_type
+    (19) data_type -> . INT
+    (20) data_type -> . DOUBLE
+    (21) data_type -> . TEXT
+    (22) data_type -> . TINYINT
+    (23) data_type -> . SMALLINT
+    (24) data_type -> . BIGINT
+    (25) data_type -> . REAL
+    (26) data_type -> . DATETIME
+    (27) data_type -> . DATE
+
+    INT             shift and go to state 85
+    DOUBLE          shift and go to state 88
+    TEXT            shift and go to state 83
+    TINYINT         shift and go to state 89
+    SMALLINT        shift and go to state 87
+    BIGINT          shift and go to state 90
+    REAL            shift and go to state 92
+    DATETIME        shift and go to state 84
+    DATE            shift and go to state 91
+
+    data_type                      shift and go to state 86
+
+state 54
+
+    (15) create_table_column_list -> create_table_column_spec . COMMA create_table_column_list
+    (16) create_table_column_list -> create_table_column_spec .
+
+    COMMA           shift and go to state 93
+    RPAREN          reduce using rule 16 (create_table_column_list -> create_table_column_spec .)
+
+
+state 55
+
+    (13) create_table_statement -> CREATE TABLE ID LPAREN create_table_column_list . RPAREN
+    (14) create_table_statement -> CREATE TABLE ID LPAREN create_table_column_list . RPAREN SEMI
+
+    RPAREN          shift and go to state 94
+
+
+state 56
+
+    (33) delete_statement -> DELETE FROM ID opt_where_clause SEMI .
+
+    INSERT          reduce using rule 33 (delete_statement -> DELETE FROM ID opt_where_clause SEMI .)
+    SELECT          reduce using rule 33 (delete_statement -> DELETE FROM ID opt_where_clause SEMI .)
+    SHOW            reduce using rule 33 (delete_statement -> DELETE FROM ID opt_where_clause SEMI .)
+    CREATE          reduce using rule 33 (delete_statement -> DELETE FROM ID opt_where_clause SEMI .)
+    DELETE          reduce using rule 33 (delete_statement -> DELETE FROM ID opt_where_clause SEMI .)
+    UPDATE          reduce using rule 33 (delete_statement -> DELETE FROM ID opt_where_clause SEMI .)
+    $end            reduce using rule 33 (delete_statement -> DELETE FROM ID opt_where_clause SEMI .)
+
+
+state 57
+
+    (56) search_condition -> NOT . search_condition
+    (54) search_condition -> . search_condition OR search_condition
+    (55) search_condition -> . search_condition AND search_condition
+    (56) search_condition -> . NOT search_condition
+    (57) search_condition -> . LPAREN search_condition RPAREN
+    (58) search_condition -> . predicate
+    (59) predicate -> . comparison_predicate
+    (60) comparison_predicate -> . scalar_exp EQ scalar_exp
+    (61) comparison_predicate -> . scalar_exp NE scalar_exp
+    (62) comparison_predicate -> . scalar_exp LT scalar_exp
+    (63) comparison_predicate -> . scalar_exp LE scalar_exp
+    (64) comparison_predicate -> . scalar_exp GT scalar_exp
+    (65) comparison_predicate -> . scalar_exp GE scalar_exp
+    (66) scalar_exp -> . scalar_exp PLUS scalar_exp
+    (67) scalar_exp -> . scalar_exp MINUS scalar_exp
+    (68) scalar_exp -> . scalar_exp TIMES scalar_exp
+    (69) scalar_exp -> . scalar_exp DIVIDE scalar_exp
+    (70) scalar_exp -> . atom
+    (71) scalar_exp -> . LPAREN scalar_exp RPAREN
+    (72) atom -> . NUMBER
+    (73) atom -> . ID
+    (74) atom -> . STRING
+
+    NOT             shift and go to state 57
+    LPAREN          shift and go to state 59
+    NUMBER          shift and go to state 64
+    ID              shift and go to state 58
+    STRING          shift and go to state 66
+
+    atom                           shift and go to state 63
+    scalar_exp                     shift and go to state 61
+    comparison_predicate           shift and go to state 62
+    search_condition               shift and go to state 95
+    predicate                      shift and go to state 60
+
+state 58
+
+    (73) atom -> ID .
+
+    EQ              reduce using rule 73 (atom -> ID .)
+    NE              reduce using rule 73 (atom -> ID .)
+    LT              reduce using rule 73 (atom -> ID .)
+    LE              reduce using rule 73 (atom -> ID .)
+    GT              reduce using rule 73 (atom -> ID .)
+    GE              reduce using rule 73 (atom -> ID .)
+    PLUS            reduce using rule 73 (atom -> ID .)
+    MINUS           reduce using rule 73 (atom -> ID .)
+    TIMES           reduce using rule 73 (atom -> ID .)
+    DIVIDE          reduce using rule 73 (atom -> ID .)
+    RPAREN          reduce using rule 73 (atom -> ID .)
+    OR              reduce using rule 73 (atom -> ID .)
+    AND             reduce using rule 73 (atom -> ID .)
+    SEMI            reduce using rule 73 (atom -> ID .)
+    INSERT          reduce using rule 73 (atom -> ID .)
+    SELECT          reduce using rule 73 (atom -> ID .)
+    SHOW            reduce using rule 73 (atom -> ID .)
+    CREATE          reduce using rule 73 (atom -> ID .)
+    DELETE          reduce using rule 73 (atom -> ID .)
+    UPDATE          reduce using rule 73 (atom -> ID .)
+    $end            reduce using rule 73 (atom -> ID .)
+    ORDER           reduce using rule 73 (atom -> ID .)
+
+
+state 59
+
+    (57) search_condition -> LPAREN . search_condition RPAREN
+    (71) scalar_exp -> LPAREN . scalar_exp RPAREN
+    (54) search_condition -> . search_condition OR search_condition
+    (55) search_condition -> . search_condition AND search_condition
+    (56) search_condition -> . NOT search_condition
+    (57) search_condition -> . LPAREN search_condition RPAREN
+    (58) search_condition -> . predicate
+    (66) scalar_exp -> . scalar_exp PLUS scalar_exp
+    (67) scalar_exp -> . scalar_exp MINUS scalar_exp
+    (68) scalar_exp -> . scalar_exp TIMES scalar_exp
+    (69) scalar_exp -> . scalar_exp DIVIDE scalar_exp
+    (70) scalar_exp -> . atom
+    (71) scalar_exp -> . LPAREN scalar_exp RPAREN
+    (59) predicate -> . comparison_predicate
+    (72) atom -> . NUMBER
+    (73) atom -> . ID
+    (74) atom -> . STRING
+    (60) comparison_predicate -> . scalar_exp EQ scalar_exp
+    (61) comparison_predicate -> . scalar_exp NE scalar_exp
+    (62) comparison_predicate -> . scalar_exp LT scalar_exp
+    (63) comparison_predicate -> . scalar_exp LE scalar_exp
+    (64) comparison_predicate -> . scalar_exp GT scalar_exp
+    (65) comparison_predicate -> . scalar_exp GE scalar_exp
+
+    NOT             shift and go to state 57
+    LPAREN          shift and go to state 59
+    NUMBER          shift and go to state 64
+    ID              shift and go to state 58
+    STRING          shift and go to state 66
+
+    atom                           shift and go to state 63
+    scalar_exp                     shift and go to state 96
+    comparison_predicate           shift and go to state 62
+    search_condition               shift and go to state 97
+    predicate                      shift and go to state 60
+
+state 60
+
+    (58) search_condition -> predicate .
+
+    OR              reduce using rule 58 (search_condition -> predicate .)
+    AND             reduce using rule 58 (search_condition -> predicate .)
+    SEMI            reduce using rule 58 (search_condition -> predicate .)
+    INSERT          reduce using rule 58 (search_condition -> predicate .)
+    SELECT          reduce using rule 58 (search_condition -> predicate .)
+    SHOW            reduce using rule 58 (search_condition -> predicate .)
+    CREATE          reduce using rule 58 (search_condition -> predicate .)
+    DELETE          reduce using rule 58 (search_condition -> predicate .)
+    UPDATE          reduce using rule 58 (search_condition -> predicate .)
+    $end            reduce using rule 58 (search_condition -> predicate .)
+    ORDER           reduce using rule 58 (search_condition -> predicate .)
+    RPAREN          reduce using rule 58 (search_condition -> predicate .)
+
+
+state 61
+
+    (60) comparison_predicate -> scalar_exp . EQ scalar_exp
+    (61) comparison_predicate -> scalar_exp . NE scalar_exp
+    (62) comparison_predicate -> scalar_exp . LT scalar_exp
+    (63) comparison_predicate -> scalar_exp . LE scalar_exp
+    (64) comparison_predicate -> scalar_exp . GT scalar_exp
+    (65) comparison_predicate -> scalar_exp . GE scalar_exp
+    (66) scalar_exp -> scalar_exp . PLUS scalar_exp
+    (67) scalar_exp -> scalar_exp . MINUS scalar_exp
+    (68) scalar_exp -> scalar_exp . TIMES scalar_exp
+    (69) scalar_exp -> scalar_exp . DIVIDE scalar_exp
+
+    EQ              shift and go to state 102
+    NE              shift and go to state 104
+    LT              shift and go to state 103
+    LE              shift and go to state 107
+    GT              shift and go to state 99
+    GE              shift and go to state 100
+    PLUS            shift and go to state 101
+    MINUS           shift and go to state 106
+    TIMES           shift and go to state 98
+    DIVIDE          shift and go to state 105
+
+
+state 62
+
+    (59) predicate -> comparison_predicate .
+
+    OR              reduce using rule 59 (predicate -> comparison_predicate .)
+    AND             reduce using rule 59 (predicate -> comparison_predicate .)
+    SEMI            reduce using rule 59 (predicate -> comparison_predicate .)
+    INSERT          reduce using rule 59 (predicate -> comparison_predicate .)
+    SELECT          reduce using rule 59 (predicate -> comparison_predicate .)
+    SHOW            reduce using rule 59 (predicate -> comparison_predicate .)
+    CREATE          reduce using rule 59 (predicate -> comparison_predicate .)
+    DELETE          reduce using rule 59 (predicate -> comparison_predicate .)
+    UPDATE          reduce using rule 59 (predicate -> comparison_predicate .)
+    $end            reduce using rule 59 (predicate -> comparison_predicate .)
+    ORDER           reduce using rule 59 (predicate -> comparison_predicate .)
+    RPAREN          reduce using rule 59 (predicate -> comparison_predicate .)
+
+
+state 63
+
+    (70) scalar_exp -> atom .
+
+    EQ              reduce using rule 70 (scalar_exp -> atom .)
+    NE              reduce using rule 70 (scalar_exp -> atom .)
+    LT              reduce using rule 70 (scalar_exp -> atom .)
+    LE              reduce using rule 70 (scalar_exp -> atom .)
+    GT              reduce using rule 70 (scalar_exp -> atom .)
+    GE              reduce using rule 70 (scalar_exp -> atom .)
+    PLUS            reduce using rule 70 (scalar_exp -> atom .)
+    MINUS           reduce using rule 70 (scalar_exp -> atom .)
+    TIMES           reduce using rule 70 (scalar_exp -> atom .)
+    DIVIDE          reduce using rule 70 (scalar_exp -> atom .)
+    OR              reduce using rule 70 (scalar_exp -> atom .)
+    AND             reduce using rule 70 (scalar_exp -> atom .)
+    SEMI            reduce using rule 70 (scalar_exp -> atom .)
+    INSERT          reduce using rule 70 (scalar_exp -> atom .)
+    SELECT          reduce using rule 70 (scalar_exp -> atom .)
+    SHOW            reduce using rule 70 (scalar_exp -> atom .)
+    CREATE          reduce using rule 70 (scalar_exp -> atom .)
+    DELETE          reduce using rule 70 (scalar_exp -> atom .)
+    UPDATE          reduce using rule 70 (scalar_exp -> atom .)
+    $end            reduce using rule 70 (scalar_exp -> atom .)
+    ORDER           reduce using rule 70 (scalar_exp -> atom .)
+    RPAREN          reduce using rule 70 (scalar_exp -> atom .)
+
+
+state 64
+
+    (72) atom -> NUMBER .
+
+    EQ              reduce using rule 72 (atom -> NUMBER .)
+    NE              reduce using rule 72 (atom -> NUMBER .)
+    LT              reduce using rule 72 (atom -> NUMBER .)
+    LE              reduce using rule 72 (atom -> NUMBER .)
+    GT              reduce using rule 72 (atom -> NUMBER .)
+    GE              reduce using rule 72 (atom -> NUMBER .)
+    PLUS            reduce using rule 72 (atom -> NUMBER .)
+    MINUS           reduce using rule 72 (atom -> NUMBER .)
+    TIMES           reduce using rule 72 (atom -> NUMBER .)
+    DIVIDE          reduce using rule 72 (atom -> NUMBER .)
+    RPAREN          reduce using rule 72 (atom -> NUMBER .)
+    OR              reduce using rule 72 (atom -> NUMBER .)
+    AND             reduce using rule 72 (atom -> NUMBER .)
+    SEMI            reduce using rule 72 (atom -> NUMBER .)
+    INSERT          reduce using rule 72 (atom -> NUMBER .)
+    SELECT          reduce using rule 72 (atom -> NUMBER .)
+    SHOW            reduce using rule 72 (atom -> NUMBER .)
+    CREATE          reduce using rule 72 (atom -> NUMBER .)
+    DELETE          reduce using rule 72 (atom -> NUMBER .)
+    UPDATE          reduce using rule 72 (atom -> NUMBER .)
+    $end            reduce using rule 72 (atom -> NUMBER .)
+    ORDER           reduce using rule 72 (atom -> NUMBER .)
+
+
+state 65
+
+    (52) opt_where_clause -> WHERE search_condition .
+    (54) search_condition -> search_condition . OR search_condition
+    (55) search_condition -> search_condition . AND search_condition
+
+    SEMI            reduce using rule 52 (opt_where_clause -> WHERE search_condition .)
+    INSERT          reduce using rule 52 (opt_where_clause -> WHERE search_condition .)
+    SELECT          reduce using rule 52 (opt_where_clause -> WHERE search_condition .)
+    SHOW            reduce using rule 52 (opt_where_clause -> WHERE search_condition .)
+    CREATE          reduce using rule 52 (opt_where_clause -> WHERE search_condition .)
+    DELETE          reduce using rule 52 (opt_where_clause -> WHERE search_condition .)
+    UPDATE          reduce using rule 52 (opt_where_clause -> WHERE search_condition .)
+    $end            reduce using rule 52 (opt_where_clause -> WHERE search_condition .)
+    ORDER           reduce using rule 52 (opt_where_clause -> WHERE search_condition .)
+    OR              shift and go to state 109
+    AND             shift and go to state 108
+
+
+state 66
+
+    (74) atom -> STRING .
+
+    EQ              reduce using rule 74 (atom -> STRING .)
+    NE              reduce using rule 74 (atom -> STRING .)
+    LT              reduce using rule 74 (atom -> STRING .)
+    LE              reduce using rule 74 (atom -> STRING .)
+    GT              reduce using rule 74 (atom -> STRING .)
+    GE              reduce using rule 74 (atom -> STRING .)
+    PLUS            reduce using rule 74 (atom -> STRING .)
+    MINUS           reduce using rule 74 (atom -> STRING .)
+    TIMES           reduce using rule 74 (atom -> STRING .)
+    DIVIDE          reduce using rule 74 (atom -> STRING .)
+    RPAREN          reduce using rule 74 (atom -> STRING .)
+    OR              reduce using rule 74 (atom -> STRING .)
+    AND             reduce using rule 74 (atom -> STRING .)
+    SEMI            reduce using rule 74 (atom -> STRING .)
+    INSERT          reduce using rule 74 (atom -> STRING .)
+    SELECT          reduce using rule 74 (atom -> STRING .)
+    SHOW            reduce using rule 74 (atom -> STRING .)
+    CREATE          reduce using rule 74 (atom -> STRING .)
+    DELETE          reduce using rule 74 (atom -> STRING .)
+    UPDATE          reduce using rule 74 (atom -> STRING .)
+    $end            reduce using rule 74 (atom -> STRING .)
+    ORDER           reduce using rule 74 (atom -> STRING .)
+
+
+state 67
+
+    (83) expr -> term .
+    (86) term -> term . TIMES factor
+    (87) term -> term . DIVIDE factor
+
+    PLUS            reduce using rule 83 (expr -> term .)
+    MINUS           reduce using rule 83 (expr -> term .)
+    RPAREN          reduce using rule 83 (expr -> term .)
+    COMMA           reduce using rule 83 (expr -> term .)
+    TIMES           shift and go to state 110
+    DIVIDE          shift and go to state 111
+
+
+state 68
+
+    (79) expr_list -> expr .
+    (81) expr -> expr . PLUS term
+    (82) expr -> expr . MINUS term
+
+    RPAREN          reduce using rule 79 (expr_list -> expr .)
+    COMMA           reduce using rule 79 (expr_list -> expr .)
+    PLUS            shift and go to state 112
+    MINUS           shift and go to state 113
+
+
+state 69
+
+    (84) expr -> ID .
+
+    PLUS            reduce using rule 84 (expr -> ID .)
+    MINUS           reduce using rule 84 (expr -> ID .)
+    RPAREN          reduce using rule 84 (expr -> ID .)
+    COMMA           reduce using rule 84 (expr -> ID .)
+
+
+state 70
+
+    (38) insert_statement -> INSERT ID VALUES LPAREN expr_list . RPAREN
+    (39) insert_statement -> INSERT ID VALUES LPAREN expr_list . RPAREN SEMI
+    (80) expr_list -> expr_list . COMMA expr
+
+    RPAREN          shift and go to state 114
+    COMMA           shift and go to state 115
+
+
+state 71
+
+    (90) factor -> LPAREN . expr RPAREN
+    (81) expr -> . expr PLUS term
+    (82) expr -> . expr MINUS term
+    (83) expr -> . term
+    (84) expr -> . ID
+    (85) expr -> . STRING
+    (86) term -> . term TIMES factor
+    (87) term -> . term DIVIDE factor
+    (88) term -> . factor
+    (89) factor -> . NUMBER
+    (90) factor -> . LPAREN expr RPAREN
+
+    ID              shift and go to state 69
+    STRING          shift and go to state 74
+    NUMBER          shift and go to state 72
+    LPAREN          shift and go to state 71
+
+    expr                           shift and go to state 116
+    term                           shift and go to state 67
+    factor                         shift and go to state 73
+
+state 72
+
+    (89) factor -> NUMBER .
+
+    TIMES           reduce using rule 89 (factor -> NUMBER .)
+    DIVIDE          reduce using rule 89 (factor -> NUMBER .)
+    PLUS            reduce using rule 89 (factor -> NUMBER .)
+    MINUS           reduce using rule 89 (factor -> NUMBER .)
+    RPAREN          reduce using rule 89 (factor -> NUMBER .)
+    COMMA           reduce using rule 89 (factor -> NUMBER .)
+
+
+state 73
+
+    (88) term -> factor .
+
+    TIMES           reduce using rule 88 (term -> factor .)
+    DIVIDE          reduce using rule 88 (term -> factor .)
+    PLUS            reduce using rule 88 (term -> factor .)
+    MINUS           reduce using rule 88 (term -> factor .)
+    RPAREN          reduce using rule 88 (term -> factor .)
+    COMMA           reduce using rule 88 (term -> factor .)
+
+
+state 74
+
+    (85) expr -> STRING .
+
+    PLUS            reduce using rule 85 (expr -> STRING .)
+    MINUS           reduce using rule 85 (expr -> STRING .)
+    RPAREN          reduce using rule 85 (expr -> STRING .)
+    COMMA           reduce using rule 85 (expr -> STRING .)
+
+
+state 75
+
+    (34) insert_statement -> INSERT ID LPAREN id_list RPAREN . VALUES LPAREN expr_list RPAREN
+    (35) insert_statement -> INSERT ID LPAREN id_list RPAREN . VALUES LPAREN expr_list RPAREN SEMI
+
+    VALUES          shift and go to state 117
+
+
+state 76
+
+    (40) insert_statement -> INSERT INTO ID VALUES LPAREN . expr_list RPAREN
+    (41) insert_statement -> INSERT INTO ID VALUES LPAREN . expr_list RPAREN SEMI
+    (79) expr_list -> . expr
+    (80) expr_list -> . expr_list COMMA expr
+    (81) expr -> . expr PLUS term
+    (82) expr -> . expr MINUS term
+    (83) expr -> . term
+    (84) expr -> . ID
+    (85) expr -> . STRING
+    (86) term -> . term TIMES factor
+    (87) term -> . term DIVIDE factor
+    (88) term -> . factor
+    (89) factor -> . NUMBER
+    (90) factor -> . LPAREN expr RPAREN
+
+    ID              shift and go to state 69
+    STRING          shift and go to state 74
+    NUMBER          shift and go to state 72
+    LPAREN          shift and go to state 71
+
+    expr                           shift and go to state 68
+    term                           shift and go to state 67
+    expr_list                      shift and go to state 118
+    factor                         shift and go to state 73
+
+state 77
+
+    (36) insert_statement -> INSERT INTO ID LPAREN id_list . RPAREN VALUES LPAREN expr_list RPAREN
+    (37) insert_statement -> INSERT INTO ID LPAREN id_list . RPAREN VALUES LPAREN expr_list RPAREN SEMI
+    (78) id_list -> id_list . COMMA ID
+
+    RPAREN          shift and go to state 119
+    COMMA           shift and go to state 36
+
+
+state 78
+
+    (48) select_statement -> SELECT select_columns FROM ID opt_where_clause . opt_orderby_clause
+    (49) select_statement -> SELECT select_columns FROM ID opt_where_clause . opt_orderby_clause SEMI
+    (75) opt_orderby_clause -> . ORDER BY ID
+    (76) opt_orderby_clause -> .
+
+    ORDER           shift and go to state 120
+    SEMI            reduce using rule 76 (opt_orderby_clause -> .)
+    INSERT          reduce using rule 76 (opt_orderby_clause -> .)
+    SELECT          reduce using rule 76 (opt_orderby_clause -> .)
+    SHOW            reduce using rule 76 (opt_orderby_clause -> .)
+    CREATE          reduce using rule 76 (opt_orderby_clause -> .)
+    DELETE          reduce using rule 76 (opt_orderby_clause -> .)
+    UPDATE          reduce using rule 76 (opt_orderby_clause -> .)
+    $end            reduce using rule 76 (opt_orderby_clause -> .)
+
+    opt_orderby_clause             shift and go to state 121
+
+state 79
+
+    (46) asignment_spec -> ID EQ NUMBER .
+
+    COMMA           reduce using rule 46 (asignment_spec -> ID EQ NUMBER .)
+    WHERE           reduce using rule 46 (asignment_spec -> ID EQ NUMBER .)
+    SEMI            reduce using rule 46 (asignment_spec -> ID EQ NUMBER .)
+    INSERT          reduce using rule 46 (asignment_spec -> ID EQ NUMBER .)
+    SELECT          reduce using rule 46 (asignment_spec -> ID EQ NUMBER .)
+    SHOW            reduce using rule 46 (asignment_spec -> ID EQ NUMBER .)
+    CREATE          reduce using rule 46 (asignment_spec -> ID EQ NUMBER .)
+    DELETE          reduce using rule 46 (asignment_spec -> ID EQ NUMBER .)
+    UPDATE          reduce using rule 46 (asignment_spec -> ID EQ NUMBER .)
+    $end            reduce using rule 46 (asignment_spec -> ID EQ NUMBER .)
+
+
+state 80
+
+    (47) asignment_spec -> ID EQ STRING .
+
+    COMMA           reduce using rule 47 (asignment_spec -> ID EQ STRING .)
+    WHERE           reduce using rule 47 (asignment_spec -> ID EQ STRING .)
+    SEMI            reduce using rule 47 (asignment_spec -> ID EQ STRING .)
+    INSERT          reduce using rule 47 (asignment_spec -> ID EQ STRING .)
+    SELECT          reduce using rule 47 (asignment_spec -> ID EQ STRING .)
+    SHOW            reduce using rule 47 (asignment_spec -> ID EQ STRING .)
+    CREATE          reduce using rule 47 (asignment_spec -> ID EQ STRING .)
+    DELETE          reduce using rule 47 (asignment_spec -> ID EQ STRING .)
+    UPDATE          reduce using rule 47 (asignment_spec -> ID EQ STRING .)
+    $end            reduce using rule 47 (asignment_spec -> ID EQ STRING .)
+
+
+state 81
+
+    (43) update_statement -> UPDATE ID SET asignment_list opt_where_clause SEMI .
+
+    INSERT          reduce using rule 43 (update_statement -> UPDATE ID SET asignment_list opt_where_clause SEMI .)
+    SELECT          reduce using rule 43 (update_statement -> UPDATE ID SET asignment_list opt_where_clause SEMI .)
+    SHOW            reduce using rule 43 (update_statement -> UPDATE ID SET asignment_list opt_where_clause SEMI .)
+    CREATE          reduce using rule 43 (update_statement -> UPDATE ID SET asignment_list opt_where_clause SEMI .)
+    DELETE          reduce using rule 43 (update_statement -> UPDATE ID SET asignment_list opt_where_clause SEMI .)
+    UPDATE          reduce using rule 43 (update_statement -> UPDATE ID SET asignment_list opt_where_clause SEMI .)
+    $end            reduce using rule 43 (update_statement -> UPDATE ID SET asignment_list opt_where_clause SEMI .)
+
+
+state 82
+
+    (44) asignment_list -> asignment_spec COMMA asignment_list .
+
+    WHERE           reduce using rule 44 (asignment_list -> asignment_spec COMMA asignment_list .)
+    SEMI            reduce using rule 44 (asignment_list -> asignment_spec COMMA asignment_list .)
+    INSERT          reduce using rule 44 (asignment_list -> asignment_spec COMMA asignment_list .)
+    SELECT          reduce using rule 44 (asignment_list -> asignment_spec COMMA asignment_list .)
+    SHOW            reduce using rule 44 (asignment_list -> asignment_spec COMMA asignment_list .)
+    CREATE          reduce using rule 44 (asignment_list -> asignment_spec COMMA asignment_list .)
+    DELETE          reduce using rule 44 (asignment_list -> asignment_spec COMMA asignment_list .)
+    UPDATE          reduce using rule 44 (asignment_list -> asignment_spec COMMA asignment_list .)
+    $end            reduce using rule 44 (asignment_list -> asignment_spec COMMA asignment_list .)
+
+
+state 83
+
+    (21) data_type -> TEXT .
+
+    NOT             reduce using rule 21 (data_type -> TEXT .)
+    PRIMARY         reduce using rule 21 (data_type -> TEXT .)
+    COMMA           reduce using rule 21 (data_type -> TEXT .)
+    RPAREN          reduce using rule 21 (data_type -> TEXT .)
+
+
+state 84
+
+    (26) data_type -> DATETIME .
+
+    NOT             reduce using rule 26 (data_type -> DATETIME .)
+    PRIMARY         reduce using rule 26 (data_type -> DATETIME .)
+    COMMA           reduce using rule 26 (data_type -> DATETIME .)
+    RPAREN          reduce using rule 26 (data_type -> DATETIME .)
+
+
+state 85
+
+    (19) data_type -> INT .
+
+    NOT             reduce using rule 19 (data_type -> INT .)
+    PRIMARY         reduce using rule 19 (data_type -> INT .)
+    COMMA           reduce using rule 19 (data_type -> INT .)
+    RPAREN          reduce using rule 19 (data_type -> INT .)
+
+
+state 86
+
+    (17) create_table_column_spec -> ID data_type . qualification_list
+    (18) create_table_column_spec -> ID data_type .
+    (28) qualification_list -> . qualification_spec qualification_list
+    (29) qualification_list -> . qualification_spec
+    (30) qualification_spec -> . NOT NULL
+    (31) qualification_spec -> . PRIMARY KEY
+
+    COMMA           reduce using rule 18 (create_table_column_spec -> ID data_type .)
+    RPAREN          reduce using rule 18 (create_table_column_spec -> ID data_type .)
+    NOT             shift and go to state 125
+    PRIMARY         shift and go to state 124
+
+    qualification_list             shift and go to state 122
+    qualification_spec             shift and go to state 123
+
+state 87
+
+    (23) data_type -> SMALLINT .
+
+    NOT             reduce using rule 23 (data_type -> SMALLINT .)
+    PRIMARY         reduce using rule 23 (data_type -> SMALLINT .)
+    COMMA           reduce using rule 23 (data_type -> SMALLINT .)
+    RPAREN          reduce using rule 23 (data_type -> SMALLINT .)
+
+
+state 88
+
+    (20) data_type -> DOUBLE .
+
+    NOT             reduce using rule 20 (data_type -> DOUBLE .)
+    PRIMARY         reduce using rule 20 (data_type -> DOUBLE .)
+    COMMA           reduce using rule 20 (data_type -> DOUBLE .)
+    RPAREN          reduce using rule 20 (data_type -> DOUBLE .)
+
+
+state 89
+
+    (22) data_type -> TINYINT .
+
+    NOT             reduce using rule 22 (data_type -> TINYINT .)
+    PRIMARY         reduce using rule 22 (data_type -> TINYINT .)
+    COMMA           reduce using rule 22 (data_type -> TINYINT .)
+    RPAREN          reduce using rule 22 (data_type -> TINYINT .)
+
+
+state 90
+
+    (24) data_type -> BIGINT .
+
+    NOT             reduce using rule 24 (data_type -> BIGINT .)
+    PRIMARY         reduce using rule 24 (data_type -> BIGINT .)
+    COMMA           reduce using rule 24 (data_type -> BIGINT .)
+    RPAREN          reduce using rule 24 (data_type -> BIGINT .)
+
+
+state 91
+
+    (27) data_type -> DATE .
+
+    NOT             reduce using rule 27 (data_type -> DATE .)
+    PRIMARY         reduce using rule 27 (data_type -> DATE .)
+    COMMA           reduce using rule 27 (data_type -> DATE .)
+    RPAREN          reduce using rule 27 (data_type -> DATE .)
+
+
+state 92
+
+    (25) data_type -> REAL .
+
+    NOT             reduce using rule 25 (data_type -> REAL .)
+    PRIMARY         reduce using rule 25 (data_type -> REAL .)
+    COMMA           reduce using rule 25 (data_type -> REAL .)
+    RPAREN          reduce using rule 25 (data_type -> REAL .)
+
+
+state 93
+
+    (15) create_table_column_list -> create_table_column_spec COMMA . create_table_column_list
+    (15) create_table_column_list -> . create_table_column_spec COMMA create_table_column_list
+    (16) create_table_column_list -> . create_table_column_spec
+    (17) create_table_column_spec -> . ID data_type qualification_list
+    (18) create_table_column_spec -> . ID data_type
+
+    ID              shift and go to state 53
+
+    create_table_column_spec       shift and go to state 54
+    create_table_column_list       shift and go to state 126
+
+state 94
+
+    (13) create_table_statement -> CREATE TABLE ID LPAREN create_table_column_list RPAREN .
+    (14) create_table_statement -> CREATE TABLE ID LPAREN create_table_column_list RPAREN . SEMI
+
+    INSERT          reduce using rule 13 (create_table_statement -> CREATE TABLE ID LPAREN create_table_column_list RPAREN .)
+    SELECT          reduce using rule 13 (create_table_statement -> CREATE TABLE ID LPAREN create_table_column_list RPAREN .)
+    SHOW            reduce using rule 13 (create_table_statement -> CREATE TABLE ID LPAREN create_table_column_list RPAREN .)
+    CREATE          reduce using rule 13 (create_table_statement -> CREATE TABLE ID LPAREN create_table_column_list RPAREN .)
+    DELETE          reduce using rule 13 (create_table_statement -> CREATE TABLE ID LPAREN create_table_column_list RPAREN .)
+    UPDATE          reduce using rule 13 (create_table_statement -> CREATE TABLE ID LPAREN create_table_column_list RPAREN .)
+    $end            reduce using rule 13 (create_table_statement -> CREATE TABLE ID LPAREN create_table_column_list RPAREN .)
+    SEMI            shift and go to state 127
+
+
+state 95
+
+    (56) search_condition -> NOT search_condition .
+    (54) search_condition -> search_condition . OR search_condition
+    (55) search_condition -> search_condition . AND search_condition
+
+    OR              reduce using rule 56 (search_condition -> NOT search_condition .)
+    AND             reduce using rule 56 (search_condition -> NOT search_condition .)
+    SEMI            reduce using rule 56 (search_condition -> NOT search_condition .)
+    INSERT          reduce using rule 56 (search_condition -> NOT search_condition .)
+    SELECT          reduce using rule 56 (search_condition -> NOT search_condition .)
+    SHOW            reduce using rule 56 (search_condition -> NOT search_condition .)
+    CREATE          reduce using rule 56 (search_condition -> NOT search_condition .)
+    DELETE          reduce using rule 56 (search_condition -> NOT search_condition .)
+    UPDATE          reduce using rule 56 (search_condition -> NOT search_condition .)
+    $end            reduce using rule 56 (search_condition -> NOT search_condition .)
+    ORDER           reduce using rule 56 (search_condition -> NOT search_condition .)
+    RPAREN          reduce using rule 56 (search_condition -> NOT search_condition .)
+
+  ! OR              [ shift and go to state 109 ]
+  ! AND             [ shift and go to state 108 ]
+
+
+state 96
+
+    (71) scalar_exp -> LPAREN scalar_exp . RPAREN
+    (66) scalar_exp -> scalar_exp . PLUS scalar_exp
+    (67) scalar_exp -> scalar_exp . MINUS scalar_exp
+    (68) scalar_exp -> scalar_exp . TIMES scalar_exp
+    (69) scalar_exp -> scalar_exp . DIVIDE scalar_exp
+    (60) comparison_predicate -> scalar_exp . EQ scalar_exp
+    (61) comparison_predicate -> scalar_exp . NE scalar_exp
+    (62) comparison_predicate -> scalar_exp . LT scalar_exp
+    (63) comparison_predicate -> scalar_exp . LE scalar_exp
+    (64) comparison_predicate -> scalar_exp . GT scalar_exp
+    (65) comparison_predicate -> scalar_exp . GE scalar_exp
+
+    RPAREN          shift and go to state 128
+    PLUS            shift and go to state 101
+    MINUS           shift and go to state 106
+    TIMES           shift and go to state 98
+    DIVIDE          shift and go to state 105
+    EQ              shift and go to state 102
+    NE              shift and go to state 104
+    LT              shift and go to state 103
+    LE              shift and go to state 107
+    GT              shift and go to state 99
+    GE              shift and go to state 100
+
+
+state 97
+
+    (57) search_condition -> LPAREN search_condition . RPAREN
+    (54) search_condition -> search_condition . OR search_condition
+    (55) search_condition -> search_condition . AND search_condition
+
+    RPAREN          shift and go to state 129
+    OR              shift and go to state 109
+    AND             shift and go to state 108
+
+
+state 98
+
+    (68) scalar_exp -> scalar_exp TIMES . scalar_exp
+    (66) scalar_exp -> . scalar_exp PLUS scalar_exp
+    (67) scalar_exp -> . scalar_exp MINUS scalar_exp
+    (68) scalar_exp -> . scalar_exp TIMES scalar_exp
+    (69) scalar_exp -> . scalar_exp DIVIDE scalar_exp
+    (70) scalar_exp -> . atom
+    (71) scalar_exp -> . LPAREN scalar_exp RPAREN
+    (72) atom -> . NUMBER
+    (73) atom -> . ID
+    (74) atom -> . STRING
+
+    LPAREN          shift and go to state 130
+    NUMBER          shift and go to state 64
+    ID              shift and go to state 58
+    STRING          shift and go to state 66
+
+    atom                           shift and go to state 63
+    scalar_exp                     shift and go to state 131
+
+state 99
+
+    (64) comparison_predicate -> scalar_exp GT . scalar_exp
+    (66) scalar_exp -> . scalar_exp PLUS scalar_exp
+    (67) scalar_exp -> . scalar_exp MINUS scalar_exp
+    (68) scalar_exp -> . scalar_exp TIMES scalar_exp
+    (69) scalar_exp -> . scalar_exp DIVIDE scalar_exp
+    (70) scalar_exp -> . atom
+    (71) scalar_exp -> . LPAREN scalar_exp RPAREN
+    (72) atom -> . NUMBER
+    (73) atom -> . ID
+    (74) atom -> . STRING
+
+    LPAREN          shift and go to state 130
+    NUMBER          shift and go to state 64
+    ID              shift and go to state 58
+    STRING          shift and go to state 66
+
+    atom                           shift and go to state 63
+    scalar_exp                     shift and go to state 132
+
+state 100
+
+    (65) comparison_predicate -> scalar_exp GE . scalar_exp
+    (66) scalar_exp -> . scalar_exp PLUS scalar_exp
+    (67) scalar_exp -> . scalar_exp MINUS scalar_exp
+    (68) scalar_exp -> . scalar_exp TIMES scalar_exp
+    (69) scalar_exp -> . scalar_exp DIVIDE scalar_exp
+    (70) scalar_exp -> . atom
+    (71) scalar_exp -> . LPAREN scalar_exp RPAREN
+    (72) atom -> . NUMBER
+    (73) atom -> . ID
+    (74) atom -> . STRING
+
+    LPAREN          shift and go to state 130
+    NUMBER          shift and go to state 64
+    ID              shift and go to state 58
+    STRING          shift and go to state 66
+
+    atom                           shift and go to state 63
+    scalar_exp                     shift and go to state 133
+
+state 101
+
+    (66) scalar_exp -> scalar_exp PLUS . scalar_exp
+    (66) scalar_exp -> . scalar_exp PLUS scalar_exp
+    (67) scalar_exp -> . scalar_exp MINUS scalar_exp
+    (68) scalar_exp -> . scalar_exp TIMES scalar_exp
+    (69) scalar_exp -> . scalar_exp DIVIDE scalar_exp
+    (70) scalar_exp -> . atom
+    (71) scalar_exp -> . LPAREN scalar_exp RPAREN
+    (72) atom -> . NUMBER
+    (73) atom -> . ID
+    (74) atom -> . STRING
+
+    LPAREN          shift and go to state 130
+    NUMBER          shift and go to state 64
+    ID              shift and go to state 58
+    STRING          shift and go to state 66
+
+    atom                           shift and go to state 63
+    scalar_exp                     shift and go to state 134
+
+state 102
+
+    (60) comparison_predicate -> scalar_exp EQ . scalar_exp
+    (66) scalar_exp -> . scalar_exp PLUS scalar_exp
+    (67) scalar_exp -> . scalar_exp MINUS scalar_exp
+    (68) scalar_exp -> . scalar_exp TIMES scalar_exp
+    (69) scalar_exp -> . scalar_exp DIVIDE scalar_exp
+    (70) scalar_exp -> . atom
+    (71) scalar_exp -> . LPAREN scalar_exp RPAREN
+    (72) atom -> . NUMBER
+    (73) atom -> . ID
+    (74) atom -> . STRING
+
+    LPAREN          shift and go to state 130
+    NUMBER          shift and go to state 64
+    ID              shift and go to state 58
+    STRING          shift and go to state 66
+
+    atom                           shift and go to state 63
+    scalar_exp                     shift and go to state 135
+
+state 103
+
+    (62) comparison_predicate -> scalar_exp LT . scalar_exp
+    (66) scalar_exp -> . scalar_exp PLUS scalar_exp
+    (67) scalar_exp -> . scalar_exp MINUS scalar_exp
+    (68) scalar_exp -> . scalar_exp TIMES scalar_exp
+    (69) scalar_exp -> . scalar_exp DIVIDE scalar_exp
+    (70) scalar_exp -> . atom
+    (71) scalar_exp -> . LPAREN scalar_exp RPAREN
+    (72) atom -> . NUMBER
+    (73) atom -> . ID
+    (74) atom -> . STRING
+
+    LPAREN          shift and go to state 130
+    NUMBER          shift and go to state 64
+    ID              shift and go to state 58
+    STRING          shift and go to state 66
+
+    atom                           shift and go to state 63
+    scalar_exp                     shift and go to state 136
+
+state 104
+
+    (61) comparison_predicate -> scalar_exp NE . scalar_exp
+    (66) scalar_exp -> . scalar_exp PLUS scalar_exp
+    (67) scalar_exp -> . scalar_exp MINUS scalar_exp
+    (68) scalar_exp -> . scalar_exp TIMES scalar_exp
+    (69) scalar_exp -> . scalar_exp DIVIDE scalar_exp
+    (70) scalar_exp -> . atom
+    (71) scalar_exp -> . LPAREN scalar_exp RPAREN
+    (72) atom -> . NUMBER
+    (73) atom -> . ID
+    (74) atom -> . STRING
+
+    LPAREN          shift and go to state 130
+    NUMBER          shift and go to state 64
+    ID              shift and go to state 58
+    STRING          shift and go to state 66
+
+    atom                           shift and go to state 63
+    scalar_exp                     shift and go to state 137
+
+state 105
+
+    (69) scalar_exp -> scalar_exp DIVIDE . scalar_exp
+    (66) scalar_exp -> . scalar_exp PLUS scalar_exp
+    (67) scalar_exp -> . scalar_exp MINUS scalar_exp
+    (68) scalar_exp -> . scalar_exp TIMES scalar_exp
+    (69) scalar_exp -> . scalar_exp DIVIDE scalar_exp
+    (70) scalar_exp -> . atom
+    (71) scalar_exp -> . LPAREN scalar_exp RPAREN
+    (72) atom -> . NUMBER
+    (73) atom -> . ID
+    (74) atom -> . STRING
+
+    LPAREN          shift and go to state 130
+    NUMBER          shift and go to state 64
+    ID              shift and go to state 58
+    STRING          shift and go to state 66
+
+    atom                           shift and go to state 63
+    scalar_exp                     shift and go to state 138
+
+state 106
+
+    (67) scalar_exp -> scalar_exp MINUS . scalar_exp
+    (66) scalar_exp -> . scalar_exp PLUS scalar_exp
+    (67) scalar_exp -> . scalar_exp MINUS scalar_exp
+    (68) scalar_exp -> . scalar_exp TIMES scalar_exp
+    (69) scalar_exp -> . scalar_exp DIVIDE scalar_exp
+    (70) scalar_exp -> . atom
+    (71) scalar_exp -> . LPAREN scalar_exp RPAREN
+    (72) atom -> . NUMBER
+    (73) atom -> . ID
+    (74) atom -> . STRING
+
+    LPAREN          shift and go to state 130
+    NUMBER          shift and go to state 64
+    ID              shift and go to state 58
+    STRING          shift and go to state 66
+
+    atom                           shift and go to state 63
+    scalar_exp                     shift and go to state 139
+
+state 107
+
+    (63) comparison_predicate -> scalar_exp LE . scalar_exp
+    (66) scalar_exp -> . scalar_exp PLUS scalar_exp
+    (67) scalar_exp -> . scalar_exp MINUS scalar_exp
+    (68) scalar_exp -> . scalar_exp TIMES scalar_exp
+    (69) scalar_exp -> . scalar_exp DIVIDE scalar_exp
+    (70) scalar_exp -> . atom
+    (71) scalar_exp -> . LPAREN scalar_exp RPAREN
+    (72) atom -> . NUMBER
+    (73) atom -> . ID
+    (74) atom -> . STRING
+
+    LPAREN          shift and go to state 130
+    NUMBER          shift and go to state 64
+    ID              shift and go to state 58
+    STRING          shift and go to state 66
+
+    atom                           shift and go to state 63
+    scalar_exp                     shift and go to state 140
+
+state 108
+
+    (55) search_condition -> search_condition AND . search_condition
+    (54) search_condition -> . search_condition OR search_condition
+    (55) search_condition -> . search_condition AND search_condition
+    (56) search_condition -> . NOT search_condition
+    (57) search_condition -> . LPAREN search_condition RPAREN
+    (58) search_condition -> . predicate
+    (59) predicate -> . comparison_predicate
+    (60) comparison_predicate -> . scalar_exp EQ scalar_exp
+    (61) comparison_predicate -> . scalar_exp NE scalar_exp
+    (62) comparison_predicate -> . scalar_exp LT scalar_exp
+    (63) comparison_predicate -> . scalar_exp LE scalar_exp
+    (64) comparison_predicate -> . scalar_exp GT scalar_exp
+    (65) comparison_predicate -> . scalar_exp GE scalar_exp
+    (66) scalar_exp -> . scalar_exp PLUS scalar_exp
+    (67) scalar_exp -> . scalar_exp MINUS scalar_exp
+    (68) scalar_exp -> . scalar_exp TIMES scalar_exp
+    (69) scalar_exp -> . scalar_exp DIVIDE scalar_exp
+    (70) scalar_exp -> . atom
+    (71) scalar_exp -> . LPAREN scalar_exp RPAREN
+    (72) atom -> . NUMBER
+    (73) atom -> . ID
+    (74) atom -> . STRING
+
+    NOT             shift and go to state 57
+    LPAREN          shift and go to state 59
+    NUMBER          shift and go to state 64
+    ID              shift and go to state 58
+    STRING          shift and go to state 66
+
+    atom                           shift and go to state 63
+    scalar_exp                     shift and go to state 61
+    comparison_predicate           shift and go to state 62
+    search_condition               shift and go to state 141
+    predicate                      shift and go to state 60
+
+state 109
+
+    (54) search_condition -> search_condition OR . search_condition
+    (54) search_condition -> . search_condition OR search_condition
+    (55) search_condition -> . search_condition AND search_condition
+    (56) search_condition -> . NOT search_condition
+    (57) search_condition -> . LPAREN search_condition RPAREN
+    (58) search_condition -> . predicate
+    (59) predicate -> . comparison_predicate
+    (60) comparison_predicate -> . scalar_exp EQ scalar_exp
+    (61) comparison_predicate -> . scalar_exp NE scalar_exp
+    (62) comparison_predicate -> . scalar_exp LT scalar_exp
+    (63) comparison_predicate -> . scalar_exp LE scalar_exp
+    (64) comparison_predicate -> . scalar_exp GT scalar_exp
+    (65) comparison_predicate -> . scalar_exp GE scalar_exp
+    (66) scalar_exp -> . scalar_exp PLUS scalar_exp
+    (67) scalar_exp -> . scalar_exp MINUS scalar_exp
+    (68) scalar_exp -> . scalar_exp TIMES scalar_exp
+    (69) scalar_exp -> . scalar_exp DIVIDE scalar_exp
+    (70) scalar_exp -> . atom
+    (71) scalar_exp -> . LPAREN scalar_exp RPAREN
+    (72) atom -> . NUMBER
+    (73) atom -> . ID
+    (74) atom -> . STRING
+
+    NOT             shift and go to state 57
+    LPAREN          shift and go to state 59
+    NUMBER          shift and go to state 64
+    ID              shift and go to state 58
+    STRING          shift and go to state 66
+
+    atom                           shift and go to state 63
+    scalar_exp                     shift and go to state 61
+    comparison_predicate           shift and go to state 62
+    search_condition               shift and go to state 142
+    predicate                      shift and go to state 60
+
+state 110
+
+    (86) term -> term TIMES . factor
+    (89) factor -> . NUMBER
+    (90) factor -> . LPAREN expr RPAREN
+
+    NUMBER          shift and go to state 72
+    LPAREN          shift and go to state 71
+
+    factor                         shift and go to state 143
+
+state 111
+
+    (87) term -> term DIVIDE . factor
+    (89) factor -> . NUMBER
+    (90) factor -> . LPAREN expr RPAREN
+
+    NUMBER          shift and go to state 72
+    LPAREN          shift and go to state 71
+
+    factor                         shift and go to state 144
+
+state 112
+
+    (81) expr -> expr PLUS . term
+    (86) term -> . term TIMES factor
+    (87) term -> . term DIVIDE factor
+    (88) term -> . factor
+    (89) factor -> . NUMBER
+    (90) factor -> . LPAREN expr RPAREN
+
+    NUMBER          shift and go to state 72
+    LPAREN          shift and go to state 71
+
+    term                           shift and go to state 145
+    factor                         shift and go to state 73
+
+state 113
+
+    (82) expr -> expr MINUS . term
+    (86) term -> . term TIMES factor
+    (87) term -> . term DIVIDE factor
+    (88) term -> . factor
+    (89) factor -> . NUMBER
+    (90) factor -> . LPAREN expr RPAREN
+
+    NUMBER          shift and go to state 72
+    LPAREN          shift and go to state 71
+
+    term                           shift and go to state 146
+    factor                         shift and go to state 73
+
+state 114
+
+    (38) insert_statement -> INSERT ID VALUES LPAREN expr_list RPAREN .
+    (39) insert_statement -> INSERT ID VALUES LPAREN expr_list RPAREN . SEMI
+
+    INSERT          reduce using rule 38 (insert_statement -> INSERT ID VALUES LPAREN expr_list RPAREN .)
+    SELECT          reduce using rule 38 (insert_statement -> INSERT ID VALUES LPAREN expr_list RPAREN .)
+    SHOW            reduce using rule 38 (insert_statement -> INSERT ID VALUES LPAREN expr_list RPAREN .)
+    CREATE          reduce using rule 38 (insert_statement -> INSERT ID VALUES LPAREN expr_list RPAREN .)
+    DELETE          reduce using rule 38 (insert_statement -> INSERT ID VALUES LPAREN expr_list RPAREN .)
+    UPDATE          reduce using rule 38 (insert_statement -> INSERT ID VALUES LPAREN expr_list RPAREN .)
+    $end            reduce using rule 38 (insert_statement -> INSERT ID VALUES LPAREN expr_list RPAREN .)
+    SEMI            shift and go to state 147
+
+
+state 115
+
+    (80) expr_list -> expr_list COMMA . expr
+    (81) expr -> . expr PLUS term
+    (82) expr -> . expr MINUS term
+    (83) expr -> . term
+    (84) expr -> . ID
+    (85) expr -> . STRING
+    (86) term -> . term TIMES factor
+    (87) term -> . term DIVIDE factor
+    (88) term -> . factor
+    (89) factor -> . NUMBER
+    (90) factor -> . LPAREN expr RPAREN
+
+    ID              shift and go to state 69
+    STRING          shift and go to state 74
+    NUMBER          shift and go to state 72
+    LPAREN          shift and go to state 71
+
+    expr                           shift and go to state 148
+    term                           shift and go to state 67
+    factor                         shift and go to state 73
+
+state 116
+
+    (90) factor -> LPAREN expr . RPAREN
+    (81) expr -> expr . PLUS term
+    (82) expr -> expr . MINUS term
+
+    RPAREN          shift and go to state 149
+    PLUS            shift and go to state 112
+    MINUS           shift and go to state 113
+
+
+state 117
+
+    (34) insert_statement -> INSERT ID LPAREN id_list RPAREN VALUES . LPAREN expr_list RPAREN
+    (35) insert_statement -> INSERT ID LPAREN id_list RPAREN VALUES . LPAREN expr_list RPAREN SEMI
+
+    LPAREN          shift and go to state 150
+
+
+state 118
+
+    (40) insert_statement -> INSERT INTO ID VALUES LPAREN expr_list . RPAREN
+    (41) insert_statement -> INSERT INTO ID VALUES LPAREN expr_list . RPAREN SEMI
+    (80) expr_list -> expr_list . COMMA expr
+
+    RPAREN          shift and go to state 151
+    COMMA           shift and go to state 115
+
+
+state 119
+
+    (36) insert_statement -> INSERT INTO ID LPAREN id_list RPAREN . VALUES LPAREN expr_list RPAREN
+    (37) insert_statement -> INSERT INTO ID LPAREN id_list RPAREN . VALUES LPAREN expr_list RPAREN SEMI
+
+    VALUES          shift and go to state 152
+
+
+state 120
+
+    (75) opt_orderby_clause -> ORDER . BY ID
+
+    BY              shift and go to state 153
+
+
+state 121
+
+    (48) select_statement -> SELECT select_columns FROM ID opt_where_clause opt_orderby_clause .
+    (49) select_statement -> SELECT select_columns FROM ID opt_where_clause opt_orderby_clause . SEMI
+
+    INSERT          reduce using rule 48 (select_statement -> SELECT select_columns FROM ID opt_where_clause opt_orderby_clause .)
+    SELECT          reduce using rule 48 (select_statement -> SELECT select_columns FROM ID opt_where_clause opt_orderby_clause .)
+    SHOW            reduce using rule 48 (select_statement -> SELECT select_columns FROM ID opt_where_clause opt_orderby_clause .)
+    CREATE          reduce using rule 48 (select_statement -> SELECT select_columns FROM ID opt_where_clause opt_orderby_clause .)
+    DELETE          reduce using rule 48 (select_statement -> SELECT select_columns FROM ID opt_where_clause opt_orderby_clause .)
+    UPDATE          reduce using rule 48 (select_statement -> SELECT select_columns FROM ID opt_where_clause opt_orderby_clause .)
+    $end            reduce using rule 48 (select_statement -> SELECT select_columns FROM ID opt_where_clause opt_orderby_clause .)
+    SEMI            shift and go to state 154
+
+
+state 122
+
+    (17) create_table_column_spec -> ID data_type qualification_list .
+
+    COMMA           reduce using rule 17 (create_table_column_spec -> ID data_type qualification_list .)
+    RPAREN          reduce using rule 17 (create_table_column_spec -> ID data_type qualification_list .)
+
+
+state 123
+
+    (28) qualification_list -> qualification_spec . qualification_list
+    (29) qualification_list -> qualification_spec .
+    (28) qualification_list -> . qualification_spec qualification_list
+    (29) qualification_list -> . qualification_spec
+    (30) qualification_spec -> . NOT NULL
+    (31) qualification_spec -> . PRIMARY KEY
+
+    COMMA           reduce using rule 29 (qualification_list -> qualification_spec .)
+    RPAREN          reduce using rule 29 (qualification_list -> qualification_spec .)
+    NOT             shift and go to state 125
+    PRIMARY         shift and go to state 124
+
+    qualification_list             shift and go to state 155
+    qualification_spec             shift and go to state 123
+
+state 124
+
+    (31) qualification_spec -> PRIMARY . KEY
+
+    KEY             shift and go to state 156
+
+
+state 125
+
+    (30) qualification_spec -> NOT . NULL
+
+    NULL            shift and go to state 157
+
+
+state 126
+
+    (15) create_table_column_list -> create_table_column_spec COMMA create_table_column_list .
+
+    RPAREN          reduce using rule 15 (create_table_column_list -> create_table_column_spec COMMA create_table_column_list .)
+
+
+state 127
+
+    (14) create_table_statement -> CREATE TABLE ID LPAREN create_table_column_list RPAREN SEMI .
+
+    INSERT          reduce using rule 14 (create_table_statement -> CREATE TABLE ID LPAREN create_table_column_list RPAREN SEMI .)
+    SELECT          reduce using rule 14 (create_table_statement -> CREATE TABLE ID LPAREN create_table_column_list RPAREN SEMI .)
+    SHOW            reduce using rule 14 (create_table_statement -> CREATE TABLE ID LPAREN create_table_column_list RPAREN SEMI .)
+    CREATE          reduce using rule 14 (create_table_statement -> CREATE TABLE ID LPAREN create_table_column_list RPAREN SEMI .)
+    DELETE          reduce using rule 14 (create_table_statement -> CREATE TABLE ID LPAREN create_table_column_list RPAREN SEMI .)
+    UPDATE          reduce using rule 14 (create_table_statement -> CREATE TABLE ID LPAREN create_table_column_list RPAREN SEMI .)
+    $end            reduce using rule 14 (create_table_statement -> CREATE TABLE ID LPAREN create_table_column_list RPAREN SEMI .)
+
+
+state 128
+
+    (71) scalar_exp -> LPAREN scalar_exp RPAREN .
+
+    EQ              reduce using rule 71 (scalar_exp -> LPAREN scalar_exp RPAREN .)
+    NE              reduce using rule 71 (scalar_exp -> LPAREN scalar_exp RPAREN .)
+    LT              reduce using rule 71 (scalar_exp -> LPAREN scalar_exp RPAREN .)
+    LE              reduce using rule 71 (scalar_exp -> LPAREN scalar_exp RPAREN .)
+    GT              reduce using rule 71 (scalar_exp -> LPAREN scalar_exp RPAREN .)
+    GE              reduce using rule 71 (scalar_exp -> LPAREN scalar_exp RPAREN .)
+    PLUS            reduce using rule 71 (scalar_exp -> LPAREN scalar_exp RPAREN .)
+    MINUS           reduce using rule 71 (scalar_exp -> LPAREN scalar_exp RPAREN .)
+    TIMES           reduce using rule 71 (scalar_exp -> LPAREN scalar_exp RPAREN .)
+    DIVIDE          reduce using rule 71 (scalar_exp -> LPAREN scalar_exp RPAREN .)
+    OR              reduce using rule 71 (scalar_exp -> LPAREN scalar_exp RPAREN .)
+    AND             reduce using rule 71 (scalar_exp -> LPAREN scalar_exp RPAREN .)
+    SEMI            reduce using rule 71 (scalar_exp -> LPAREN scalar_exp RPAREN .)
+    INSERT          reduce using rule 71 (scalar_exp -> LPAREN scalar_exp RPAREN .)
+    SELECT          reduce using rule 71 (scalar_exp -> LPAREN scalar_exp RPAREN .)
+    SHOW            reduce using rule 71 (scalar_exp -> LPAREN scalar_exp RPAREN .)
+    CREATE          reduce using rule 71 (scalar_exp -> LPAREN scalar_exp RPAREN .)
+    DELETE          reduce using rule 71 (scalar_exp -> LPAREN scalar_exp RPAREN .)
+    UPDATE          reduce using rule 71 (scalar_exp -> LPAREN scalar_exp RPAREN .)
+    $end            reduce using rule 71 (scalar_exp -> LPAREN scalar_exp RPAREN .)
+    ORDER           reduce using rule 71 (scalar_exp -> LPAREN scalar_exp RPAREN .)
+    RPAREN          reduce using rule 71 (scalar_exp -> LPAREN scalar_exp RPAREN .)
+
+
+state 129
+
+    (57) search_condition -> LPAREN search_condition RPAREN .
+
+    OR              reduce using rule 57 (search_condition -> LPAREN search_condition RPAREN .)
+    AND             reduce using rule 57 (search_condition -> LPAREN search_condition RPAREN .)
+    SEMI            reduce using rule 57 (search_condition -> LPAREN search_condition RPAREN .)
+    INSERT          reduce using rule 57 (search_condition -> LPAREN search_condition RPAREN .)
+    SELECT          reduce using rule 57 (search_condition -> LPAREN search_condition RPAREN .)
+    SHOW            reduce using rule 57 (search_condition -> LPAREN search_condition RPAREN .)
+    CREATE          reduce using rule 57 (search_condition -> LPAREN search_condition RPAREN .)
+    DELETE          reduce using rule 57 (search_condition -> LPAREN search_condition RPAREN .)
+    UPDATE          reduce using rule 57 (search_condition -> LPAREN search_condition RPAREN .)
+    $end            reduce using rule 57 (search_condition -> LPAREN search_condition RPAREN .)
+    ORDER           reduce using rule 57 (search_condition -> LPAREN search_condition RPAREN .)
+    RPAREN          reduce using rule 57 (search_condition -> LPAREN search_condition RPAREN .)
+
+
+state 130
+
+    (71) scalar_exp -> LPAREN . scalar_exp RPAREN
+    (66) scalar_exp -> . scalar_exp PLUS scalar_exp
+    (67) scalar_exp -> . scalar_exp MINUS scalar_exp
+    (68) scalar_exp -> . scalar_exp TIMES scalar_exp
+    (69) scalar_exp -> . scalar_exp DIVIDE scalar_exp
+    (70) scalar_exp -> . atom
+    (71) scalar_exp -> . LPAREN scalar_exp RPAREN
+    (72) atom -> . NUMBER
+    (73) atom -> . ID
+    (74) atom -> . STRING
+
+    LPAREN          shift and go to state 130
+    NUMBER          shift and go to state 64
+    ID              shift and go to state 58
+    STRING          shift and go to state 66
+
+    atom                           shift and go to state 63
+    scalar_exp                     shift and go to state 158
+
+state 131
+
+    (68) scalar_exp -> scalar_exp TIMES scalar_exp .
+    (66) scalar_exp -> scalar_exp . PLUS scalar_exp
+    (67) scalar_exp -> scalar_exp . MINUS scalar_exp
+    (68) scalar_exp -> scalar_exp . TIMES scalar_exp
+    (69) scalar_exp -> scalar_exp . DIVIDE scalar_exp
+
+    EQ              reduce using rule 68 (scalar_exp -> scalar_exp TIMES scalar_exp .)
+    NE              reduce using rule 68 (scalar_exp -> scalar_exp TIMES scalar_exp .)
+    LT              reduce using rule 68 (scalar_exp -> scalar_exp TIMES scalar_exp .)
+    LE              reduce using rule 68 (scalar_exp -> scalar_exp TIMES scalar_exp .)
+    GT              reduce using rule 68 (scalar_exp -> scalar_exp TIMES scalar_exp .)
+    GE              reduce using rule 68 (scalar_exp -> scalar_exp TIMES scalar_exp .)
+    PLUS            reduce using rule 68 (scalar_exp -> scalar_exp TIMES scalar_exp .)
+    MINUS           reduce using rule 68 (scalar_exp -> scalar_exp TIMES scalar_exp .)
+    TIMES           reduce using rule 68 (scalar_exp -> scalar_exp TIMES scalar_exp .)
+    DIVIDE          reduce using rule 68 (scalar_exp -> scalar_exp TIMES scalar_exp .)
+    OR              reduce using rule 68 (scalar_exp -> scalar_exp TIMES scalar_exp .)
+    AND             reduce using rule 68 (scalar_exp -> scalar_exp TIMES scalar_exp .)
+    SEMI            reduce using rule 68 (scalar_exp -> scalar_exp TIMES scalar_exp .)
+    INSERT          reduce using rule 68 (scalar_exp -> scalar_exp TIMES scalar_exp .)
+    SELECT          reduce using rule 68 (scalar_exp -> scalar_exp TIMES scalar_exp .)
+    SHOW            reduce using rule 68 (scalar_exp -> scalar_exp TIMES scalar_exp .)
+    CREATE          reduce using rule 68 (scalar_exp -> scalar_exp TIMES scalar_exp .)
+    DELETE          reduce using rule 68 (scalar_exp -> scalar_exp TIMES scalar_exp .)
+    UPDATE          reduce using rule 68 (scalar_exp -> scalar_exp TIMES scalar_exp .)
+    $end            reduce using rule 68 (scalar_exp -> scalar_exp TIMES scalar_exp .)
+    ORDER           reduce using rule 68 (scalar_exp -> scalar_exp TIMES scalar_exp .)
+    RPAREN          reduce using rule 68 (scalar_exp -> scalar_exp TIMES scalar_exp .)
+
+  ! PLUS            [ shift and go to state 101 ]
+  ! MINUS           [ shift and go to state 106 ]
+  ! TIMES           [ shift and go to state 98 ]
+  ! DIVIDE          [ shift and go to state 105 ]
+
+
+state 132
+
+    (64) comparison_predicate -> scalar_exp GT scalar_exp .
+    (66) scalar_exp -> scalar_exp . PLUS scalar_exp
+    (67) scalar_exp -> scalar_exp . MINUS scalar_exp
+    (68) scalar_exp -> scalar_exp . TIMES scalar_exp
+    (69) scalar_exp -> scalar_exp . DIVIDE scalar_exp
+
+    RPAREN          reduce using rule 64 (comparison_predicate -> scalar_exp GT scalar_exp .)
+    OR              reduce using rule 64 (comparison_predicate -> scalar_exp GT scalar_exp .)
+    AND             reduce using rule 64 (comparison_predicate -> scalar_exp GT scalar_exp .)
+    SEMI            reduce using rule 64 (comparison_predicate -> scalar_exp GT scalar_exp .)
+    INSERT          reduce using rule 64 (comparison_predicate -> scalar_exp GT scalar_exp .)
+    SELECT          reduce using rule 64 (comparison_predicate -> scalar_exp GT scalar_exp .)
+    SHOW            reduce using rule 64 (comparison_predicate -> scalar_exp GT scalar_exp .)
+    CREATE          reduce using rule 64 (comparison_predicate -> scalar_exp GT scalar_exp .)
+    DELETE          reduce using rule 64 (comparison_predicate -> scalar_exp GT scalar_exp .)
+    UPDATE          reduce using rule 64 (comparison_predicate -> scalar_exp GT scalar_exp .)
+    $end            reduce using rule 64 (comparison_predicate -> scalar_exp GT scalar_exp .)
+    ORDER           reduce using rule 64 (comparison_predicate -> scalar_exp GT scalar_exp .)
+    PLUS            shift and go to state 101
+    MINUS           shift and go to state 106
+    TIMES           shift and go to state 98
+    DIVIDE          shift and go to state 105
+
+
+state 133
+
+    (65) comparison_predicate -> scalar_exp GE scalar_exp .
+    (66) scalar_exp -> scalar_exp . PLUS scalar_exp
+    (67) scalar_exp -> scalar_exp . MINUS scalar_exp
+    (68) scalar_exp -> scalar_exp . TIMES scalar_exp
+    (69) scalar_exp -> scalar_exp . DIVIDE scalar_exp
+
+    RPAREN          reduce using rule 65 (comparison_predicate -> scalar_exp GE scalar_exp .)
+    OR              reduce using rule 65 (comparison_predicate -> scalar_exp GE scalar_exp .)
+    AND             reduce using rule 65 (comparison_predicate -> scalar_exp GE scalar_exp .)
+    SEMI            reduce using rule 65 (comparison_predicate -> scalar_exp GE scalar_exp .)
+    INSERT          reduce using rule 65 (comparison_predicate -> scalar_exp GE scalar_exp .)
+    SELECT          reduce using rule 65 (comparison_predicate -> scalar_exp GE scalar_exp .)
+    SHOW            reduce using rule 65 (comparison_predicate -> scalar_exp GE scalar_exp .)
+    CREATE          reduce using rule 65 (comparison_predicate -> scalar_exp GE scalar_exp .)
+    DELETE          reduce using rule 65 (comparison_predicate -> scalar_exp GE scalar_exp .)
+    UPDATE          reduce using rule 65 (comparison_predicate -> scalar_exp GE scalar_exp .)
+    $end            reduce using rule 65 (comparison_predicate -> scalar_exp GE scalar_exp .)
+    ORDER           reduce using rule 65 (comparison_predicate -> scalar_exp GE scalar_exp .)
+    PLUS            shift and go to state 101
+    MINUS           shift and go to state 106
+    TIMES           shift and go to state 98
+    DIVIDE          shift and go to state 105
+
+
+state 134
+
+    (66) scalar_exp -> scalar_exp PLUS scalar_exp .
+    (66) scalar_exp -> scalar_exp . PLUS scalar_exp
+    (67) scalar_exp -> scalar_exp . MINUS scalar_exp
+    (68) scalar_exp -> scalar_exp . TIMES scalar_exp
+    (69) scalar_exp -> scalar_exp . DIVIDE scalar_exp
+
+    EQ              reduce using rule 66 (scalar_exp -> scalar_exp PLUS scalar_exp .)
+    NE              reduce using rule 66 (scalar_exp -> scalar_exp PLUS scalar_exp .)
+    LT              reduce using rule 66 (scalar_exp -> scalar_exp PLUS scalar_exp .)
+    LE              reduce using rule 66 (scalar_exp -> scalar_exp PLUS scalar_exp .)
+    GT              reduce using rule 66 (scalar_exp -> scalar_exp PLUS scalar_exp .)
+    GE              reduce using rule 66 (scalar_exp -> scalar_exp PLUS scalar_exp .)
+    PLUS            reduce using rule 66 (scalar_exp -> scalar_exp PLUS scalar_exp .)
+    MINUS           reduce using rule 66 (scalar_exp -> scalar_exp PLUS scalar_exp .)
+    OR              reduce using rule 66 (scalar_exp -> scalar_exp PLUS scalar_exp .)
+    AND             reduce using rule 66 (scalar_exp -> scalar_exp PLUS scalar_exp .)
+    SEMI            reduce using rule 66 (scalar_exp -> scalar_exp PLUS scalar_exp .)
+    INSERT          reduce using rule 66 (scalar_exp -> scalar_exp PLUS scalar_exp .)
+    SELECT          reduce using rule 66 (scalar_exp -> scalar_exp PLUS scalar_exp .)
+    SHOW            reduce using rule 66 (scalar_exp -> scalar_exp PLUS scalar_exp .)
+    CREATE          reduce using rule 66 (scalar_exp -> scalar_exp PLUS scalar_exp .)
+    DELETE          reduce using rule 66 (scalar_exp -> scalar_exp PLUS scalar_exp .)
+    UPDATE          reduce using rule 66 (scalar_exp -> scalar_exp PLUS scalar_exp .)
+    $end            reduce using rule 66 (scalar_exp -> scalar_exp PLUS scalar_exp .)
+    ORDER           reduce using rule 66 (scalar_exp -> scalar_exp PLUS scalar_exp .)
+    RPAREN          reduce using rule 66 (scalar_exp -> scalar_exp PLUS scalar_exp .)
+    TIMES           shift and go to state 98
+    DIVIDE          shift and go to state 105
+
+  ! TIMES           [ reduce using rule 66 (scalar_exp -> scalar_exp PLUS scalar_exp .) ]
+  ! DIVIDE          [ reduce using rule 66 (scalar_exp -> scalar_exp PLUS scalar_exp .) ]
+  ! PLUS            [ shift and go to state 101 ]
+  ! MINUS           [ shift and go to state 106 ]
+
+
+state 135
+
+    (60) comparison_predicate -> scalar_exp EQ scalar_exp .
+    (66) scalar_exp -> scalar_exp . PLUS scalar_exp
+    (67) scalar_exp -> scalar_exp . MINUS scalar_exp
+    (68) scalar_exp -> scalar_exp . TIMES scalar_exp
+    (69) scalar_exp -> scalar_exp . DIVIDE scalar_exp
+
+    RPAREN          reduce using rule 60 (comparison_predicate -> scalar_exp EQ scalar_exp .)
+    OR              reduce using rule 60 (comparison_predicate -> scalar_exp EQ scalar_exp .)
+    AND             reduce using rule 60 (comparison_predicate -> scalar_exp EQ scalar_exp .)
+    SEMI            reduce using rule 60 (comparison_predicate -> scalar_exp EQ scalar_exp .)
+    INSERT          reduce using rule 60 (comparison_predicate -> scalar_exp EQ scalar_exp .)
+    SELECT          reduce using rule 60 (comparison_predicate -> scalar_exp EQ scalar_exp .)
+    SHOW            reduce using rule 60 (comparison_predicate -> scalar_exp EQ scalar_exp .)
+    CREATE          reduce using rule 60 (comparison_predicate -> scalar_exp EQ scalar_exp .)
+    DELETE          reduce using rule 60 (comparison_predicate -> scalar_exp EQ scalar_exp .)
+    UPDATE          reduce using rule 60 (comparison_predicate -> scalar_exp EQ scalar_exp .)
+    $end            reduce using rule 60 (comparison_predicate -> scalar_exp EQ scalar_exp .)
+    ORDER           reduce using rule 60 (comparison_predicate -> scalar_exp EQ scalar_exp .)
+    PLUS            shift and go to state 101
+    MINUS           shift and go to state 106
+    TIMES           shift and go to state 98
+    DIVIDE          shift and go to state 105
+
+
+state 136
+
+    (62) comparison_predicate -> scalar_exp LT scalar_exp .
+    (66) scalar_exp -> scalar_exp . PLUS scalar_exp
+    (67) scalar_exp -> scalar_exp . MINUS scalar_exp
+    (68) scalar_exp -> scalar_exp . TIMES scalar_exp
+    (69) scalar_exp -> scalar_exp . DIVIDE scalar_exp
+
+    RPAREN          reduce using rule 62 (comparison_predicate -> scalar_exp LT scalar_exp .)
+    OR              reduce using rule 62 (comparison_predicate -> scalar_exp LT scalar_exp .)
+    AND             reduce using rule 62 (comparison_predicate -> scalar_exp LT scalar_exp .)
+    SEMI            reduce using rule 62 (comparison_predicate -> scalar_exp LT scalar_exp .)
+    INSERT          reduce using rule 62 (comparison_predicate -> scalar_exp LT scalar_exp .)
+    SELECT          reduce using rule 62 (comparison_predicate -> scalar_exp LT scalar_exp .)
+    SHOW            reduce using rule 62 (comparison_predicate -> scalar_exp LT scalar_exp .)
+    CREATE          reduce using rule 62 (comparison_predicate -> scalar_exp LT scalar_exp .)
+    DELETE          reduce using rule 62 (comparison_predicate -> scalar_exp LT scalar_exp .)
+    UPDATE          reduce using rule 62 (comparison_predicate -> scalar_exp LT scalar_exp .)
+    $end            reduce using rule 62 (comparison_predicate -> scalar_exp LT scalar_exp .)
+    ORDER           reduce using rule 62 (comparison_predicate -> scalar_exp LT scalar_exp .)
+    PLUS            shift and go to state 101
+    MINUS           shift and go to state 106
+    TIMES           shift and go to state 98
+    DIVIDE          shift and go to state 105
+
+
+state 137
+
+    (61) comparison_predicate -> scalar_exp NE scalar_exp .
+    (66) scalar_exp -> scalar_exp . PLUS scalar_exp
+    (67) scalar_exp -> scalar_exp . MINUS scalar_exp
+    (68) scalar_exp -> scalar_exp . TIMES scalar_exp
+    (69) scalar_exp -> scalar_exp . DIVIDE scalar_exp
+
+    RPAREN          reduce using rule 61 (comparison_predicate -> scalar_exp NE scalar_exp .)
+    OR              reduce using rule 61 (comparison_predicate -> scalar_exp NE scalar_exp .)
+    AND             reduce using rule 61 (comparison_predicate -> scalar_exp NE scalar_exp .)
+    SEMI            reduce using rule 61 (comparison_predicate -> scalar_exp NE scalar_exp .)
+    INSERT          reduce using rule 61 (comparison_predicate -> scalar_exp NE scalar_exp .)
+    SELECT          reduce using rule 61 (comparison_predicate -> scalar_exp NE scalar_exp .)
+    SHOW            reduce using rule 61 (comparison_predicate -> scalar_exp NE scalar_exp .)
+    CREATE          reduce using rule 61 (comparison_predicate -> scalar_exp NE scalar_exp .)
+    DELETE          reduce using rule 61 (comparison_predicate -> scalar_exp NE scalar_exp .)
+    UPDATE          reduce using rule 61 (comparison_predicate -> scalar_exp NE scalar_exp .)
+    $end            reduce using rule 61 (comparison_predicate -> scalar_exp NE scalar_exp .)
+    ORDER           reduce using rule 61 (comparison_predicate -> scalar_exp NE scalar_exp .)
+    PLUS            shift and go to state 101
+    MINUS           shift and go to state 106
+    TIMES           shift and go to state 98
+    DIVIDE          shift and go to state 105
+
+
+state 138
+
+    (69) scalar_exp -> scalar_exp DIVIDE scalar_exp .
+    (66) scalar_exp -> scalar_exp . PLUS scalar_exp
+    (67) scalar_exp -> scalar_exp . MINUS scalar_exp
+    (68) scalar_exp -> scalar_exp . TIMES scalar_exp
+    (69) scalar_exp -> scalar_exp . DIVIDE scalar_exp
+
+    EQ              reduce using rule 69 (scalar_exp -> scalar_exp DIVIDE scalar_exp .)
+    NE              reduce using rule 69 (scalar_exp -> scalar_exp DIVIDE scalar_exp .)
+    LT              reduce using rule 69 (scalar_exp -> scalar_exp DIVIDE scalar_exp .)
+    LE              reduce using rule 69 (scalar_exp -> scalar_exp DIVIDE scalar_exp .)
+    GT              reduce using rule 69 (scalar_exp -> scalar_exp DIVIDE scalar_exp .)
+    GE              reduce using rule 69 (scalar_exp -> scalar_exp DIVIDE scalar_exp .)
+    PLUS            reduce using rule 69 (scalar_exp -> scalar_exp DIVIDE scalar_exp .)
+    MINUS           reduce using rule 69 (scalar_exp -> scalar_exp DIVIDE scalar_exp .)
+    TIMES           reduce using rule 69 (scalar_exp -> scalar_exp DIVIDE scalar_exp .)
+    DIVIDE          reduce using rule 69 (scalar_exp -> scalar_exp DIVIDE scalar_exp .)
+    OR              reduce using rule 69 (scalar_exp -> scalar_exp DIVIDE scalar_exp .)
+    AND             reduce using rule 69 (scalar_exp -> scalar_exp DIVIDE scalar_exp .)
+    SEMI            reduce using rule 69 (scalar_exp -> scalar_exp DIVIDE scalar_exp .)
+    INSERT          reduce using rule 69 (scalar_exp -> scalar_exp DIVIDE scalar_exp .)
+    SELECT          reduce using rule 69 (scalar_exp -> scalar_exp DIVIDE scalar_exp .)
+    SHOW            reduce using rule 69 (scalar_exp -> scalar_exp DIVIDE scalar_exp .)
+    CREATE          reduce using rule 69 (scalar_exp -> scalar_exp DIVIDE scalar_exp .)
+    DELETE          reduce using rule 69 (scalar_exp -> scalar_exp DIVIDE scalar_exp .)
+    UPDATE          reduce using rule 69 (scalar_exp -> scalar_exp DIVIDE scalar_exp .)
+    $end            reduce using rule 69 (scalar_exp -> scalar_exp DIVIDE scalar_exp .)
+    ORDER           reduce using rule 69 (scalar_exp -> scalar_exp DIVIDE scalar_exp .)
+    RPAREN          reduce using rule 69 (scalar_exp -> scalar_exp DIVIDE scalar_exp .)
+
+  ! PLUS            [ shift and go to state 101 ]
+  ! MINUS           [ shift and go to state 106 ]
+  ! TIMES           [ shift and go to state 98 ]
+  ! DIVIDE          [ shift and go to state 105 ]
+
+
+state 139
+
+    (67) scalar_exp -> scalar_exp MINUS scalar_exp .
+    (66) scalar_exp -> scalar_exp . PLUS scalar_exp
+    (67) scalar_exp -> scalar_exp . MINUS scalar_exp
+    (68) scalar_exp -> scalar_exp . TIMES scalar_exp
+    (69) scalar_exp -> scalar_exp . DIVIDE scalar_exp
+
+    EQ              reduce using rule 67 (scalar_exp -> scalar_exp MINUS scalar_exp .)
+    NE              reduce using rule 67 (scalar_exp -> scalar_exp MINUS scalar_exp .)
+    LT              reduce using rule 67 (scalar_exp -> scalar_exp MINUS scalar_exp .)
+    LE              reduce using rule 67 (scalar_exp -> scalar_exp MINUS scalar_exp .)
+    GT              reduce using rule 67 (scalar_exp -> scalar_exp MINUS scalar_exp .)
+    GE              reduce using rule 67 (scalar_exp -> scalar_exp MINUS scalar_exp .)
+    PLUS            reduce using rule 67 (scalar_exp -> scalar_exp MINUS scalar_exp .)
+    MINUS           reduce using rule 67 (scalar_exp -> scalar_exp MINUS scalar_exp .)
+    OR              reduce using rule 67 (scalar_exp -> scalar_exp MINUS scalar_exp .)
+    AND             reduce using rule 67 (scalar_exp -> scalar_exp MINUS scalar_exp .)
+    SEMI            reduce using rule 67 (scalar_exp -> scalar_exp MINUS scalar_exp .)
+    INSERT          reduce using rule 67 (scalar_exp -> scalar_exp MINUS scalar_exp .)
+    SELECT          reduce using rule 67 (scalar_exp -> scalar_exp MINUS scalar_exp .)
+    SHOW            reduce using rule 67 (scalar_exp -> scalar_exp MINUS scalar_exp .)
+    CREATE          reduce using rule 67 (scalar_exp -> scalar_exp MINUS scalar_exp .)
+    DELETE          reduce using rule 67 (scalar_exp -> scalar_exp MINUS scalar_exp .)
+    UPDATE          reduce using rule 67 (scalar_exp -> scalar_exp MINUS scalar_exp .)
+    $end            reduce using rule 67 (scalar_exp -> scalar_exp MINUS scalar_exp .)
+    ORDER           reduce using rule 67 (scalar_exp -> scalar_exp MINUS scalar_exp .)
+    RPAREN          reduce using rule 67 (scalar_exp -> scalar_exp MINUS scalar_exp .)
+    TIMES           shift and go to state 98
+    DIVIDE          shift and go to state 105
+
+  ! TIMES           [ reduce using rule 67 (scalar_exp -> scalar_exp MINUS scalar_exp .) ]
+  ! DIVIDE          [ reduce using rule 67 (scalar_exp -> scalar_exp MINUS scalar_exp .) ]
+  ! PLUS            [ shift and go to state 101 ]
+  ! MINUS           [ shift and go to state 106 ]
+
+
+state 140
+
+    (63) comparison_predicate -> scalar_exp LE scalar_exp .
+    (66) scalar_exp -> scalar_exp . PLUS scalar_exp
+    (67) scalar_exp -> scalar_exp . MINUS scalar_exp
+    (68) scalar_exp -> scalar_exp . TIMES scalar_exp
+    (69) scalar_exp -> scalar_exp . DIVIDE scalar_exp
+
+    RPAREN          reduce using rule 63 (comparison_predicate -> scalar_exp LE scalar_exp .)
+    OR              reduce using rule 63 (comparison_predicate -> scalar_exp LE scalar_exp .)
+    AND             reduce using rule 63 (comparison_predicate -> scalar_exp LE scalar_exp .)
+    SEMI            reduce using rule 63 (comparison_predicate -> scalar_exp LE scalar_exp .)
+    INSERT          reduce using rule 63 (comparison_predicate -> scalar_exp LE scalar_exp .)
+    SELECT          reduce using rule 63 (comparison_predicate -> scalar_exp LE scalar_exp .)
+    SHOW            reduce using rule 63 (comparison_predicate -> scalar_exp LE scalar_exp .)
+    CREATE          reduce using rule 63 (comparison_predicate -> scalar_exp LE scalar_exp .)
+    DELETE          reduce using rule 63 (comparison_predicate -> scalar_exp LE scalar_exp .)
+    UPDATE          reduce using rule 63 (comparison_predicate -> scalar_exp LE scalar_exp .)
+    $end            reduce using rule 63 (comparison_predicate -> scalar_exp LE scalar_exp .)
+    ORDER           reduce using rule 63 (comparison_predicate -> scalar_exp LE scalar_exp .)
+    PLUS            shift and go to state 101
+    MINUS           shift and go to state 106
+    TIMES           shift and go to state 98
+    DIVIDE          shift and go to state 105
+
+
+state 141
+
+    (55) search_condition -> search_condition AND search_condition .
+    (54) search_condition -> search_condition . OR search_condition
+    (55) search_condition -> search_condition . AND search_condition
+
+    OR              reduce using rule 55 (search_condition -> search_condition AND search_condition .)
+    AND             reduce using rule 55 (search_condition -> search_condition AND search_condition .)
+    SEMI            reduce using rule 55 (search_condition -> search_condition AND search_condition .)
+    INSERT          reduce using rule 55 (search_condition -> search_condition AND search_condition .)
+    SELECT          reduce using rule 55 (search_condition -> search_condition AND search_condition .)
+    SHOW            reduce using rule 55 (search_condition -> search_condition AND search_condition .)
+    CREATE          reduce using rule 55 (search_condition -> search_condition AND search_condition .)
+    DELETE          reduce using rule 55 (search_condition -> search_condition AND search_condition .)
+    UPDATE          reduce using rule 55 (search_condition -> search_condition AND search_condition .)
+    $end            reduce using rule 55 (search_condition -> search_condition AND search_condition .)
+    ORDER           reduce using rule 55 (search_condition -> search_condition AND search_condition .)
+    RPAREN          reduce using rule 55 (search_condition -> search_condition AND search_condition .)
+
+  ! OR              [ shift and go to state 109 ]
+  ! AND             [ shift and go to state 108 ]
+
+
+state 142
+
+    (54) search_condition -> search_condition OR search_condition .
+    (54) search_condition -> search_condition . OR search_condition
+    (55) search_condition -> search_condition . AND search_condition
+
+    OR              reduce using rule 54 (search_condition -> search_condition OR search_condition .)
+    SEMI            reduce using rule 54 (search_condition -> search_condition OR search_condition .)
+    INSERT          reduce using rule 54 (search_condition -> search_condition OR search_condition .)
+    SELECT          reduce using rule 54 (search_condition -> search_condition OR search_condition .)
+    SHOW            reduce using rule 54 (search_condition -> search_condition OR search_condition .)
+    CREATE          reduce using rule 54 (search_condition -> search_condition OR search_condition .)
+    DELETE          reduce using rule 54 (search_condition -> search_condition OR search_condition .)
+    UPDATE          reduce using rule 54 (search_condition -> search_condition OR search_condition .)
+    $end            reduce using rule 54 (search_condition -> search_condition OR search_condition .)
+    ORDER           reduce using rule 54 (search_condition -> search_condition OR search_condition .)
+    RPAREN          reduce using rule 54 (search_condition -> search_condition OR search_condition .)
+    AND             shift and go to state 108
+
+  ! AND             [ reduce using rule 54 (search_condition -> search_condition OR search_condition .) ]
+  ! OR              [ shift and go to state 109 ]
+
+
+state 143
+
+    (86) term -> term TIMES factor .
+
+    TIMES           reduce using rule 86 (term -> term TIMES factor .)
+    DIVIDE          reduce using rule 86 (term -> term TIMES factor .)
+    PLUS            reduce using rule 86 (term -> term TIMES factor .)
+    MINUS           reduce using rule 86 (term -> term TIMES factor .)
+    RPAREN          reduce using rule 86 (term -> term TIMES factor .)
+    COMMA           reduce using rule 86 (term -> term TIMES factor .)
+
+
+state 144
+
+    (87) term -> term DIVIDE factor .
+
+    TIMES           reduce using rule 87 (term -> term DIVIDE factor .)
+    DIVIDE          reduce using rule 87 (term -> term DIVIDE factor .)
+    PLUS            reduce using rule 87 (term -> term DIVIDE factor .)
+    MINUS           reduce using rule 87 (term -> term DIVIDE factor .)
+    RPAREN          reduce using rule 87 (term -> term DIVIDE factor .)
+    COMMA           reduce using rule 87 (term -> term DIVIDE factor .)
+
+
+state 145
+
+    (81) expr -> expr PLUS term .
+    (86) term -> term . TIMES factor
+    (87) term -> term . DIVIDE factor
+
+    PLUS            reduce using rule 81 (expr -> expr PLUS term .)
+    MINUS           reduce using rule 81 (expr -> expr PLUS term .)
+    RPAREN          reduce using rule 81 (expr -> expr PLUS term .)
+    COMMA           reduce using rule 81 (expr -> expr PLUS term .)
+    TIMES           shift and go to state 110
+    DIVIDE          shift and go to state 111
+
+
+state 146
+
+    (82) expr -> expr MINUS term .
+    (86) term -> term . TIMES factor
+    (87) term -> term . DIVIDE factor
+
+    PLUS            reduce using rule 82 (expr -> expr MINUS term .)
+    MINUS           reduce using rule 82 (expr -> expr MINUS term .)
+    RPAREN          reduce using rule 82 (expr -> expr MINUS term .)
+    COMMA           reduce using rule 82 (expr -> expr MINUS term .)
+    TIMES           shift and go to state 110
+    DIVIDE          shift and go to state 111
+
+
+state 147
+
+    (39) insert_statement -> INSERT ID VALUES LPAREN expr_list RPAREN SEMI .
+
+    INSERT          reduce using rule 39 (insert_statement -> INSERT ID VALUES LPAREN expr_list RPAREN SEMI .)
+    SELECT          reduce using rule 39 (insert_statement -> INSERT ID VALUES LPAREN expr_list RPAREN SEMI .)
+    SHOW            reduce using rule 39 (insert_statement -> INSERT ID VALUES LPAREN expr_list RPAREN SEMI .)
+    CREATE          reduce using rule 39 (insert_statement -> INSERT ID VALUES LPAREN expr_list RPAREN SEMI .)
+    DELETE          reduce using rule 39 (insert_statement -> INSERT ID VALUES LPAREN expr_list RPAREN SEMI .)
+    UPDATE          reduce using rule 39 (insert_statement -> INSERT ID VALUES LPAREN expr_list RPAREN SEMI .)
+    $end            reduce using rule 39 (insert_statement -> INSERT ID VALUES LPAREN expr_list RPAREN SEMI .)
+
+
+state 148
+
+    (80) expr_list -> expr_list COMMA expr .
+    (81) expr -> expr . PLUS term
+    (82) expr -> expr . MINUS term
+
+    RPAREN          reduce using rule 80 (expr_list -> expr_list COMMA expr .)
+    COMMA           reduce using rule 80 (expr_list -> expr_list COMMA expr .)
+    PLUS            shift and go to state 112
+    MINUS           shift and go to state 113
+
+
+state 149
+
+    (90) factor -> LPAREN expr RPAREN .
+
+    TIMES           reduce using rule 90 (factor -> LPAREN expr RPAREN .)
+    DIVIDE          reduce using rule 90 (factor -> LPAREN expr RPAREN .)
+    PLUS            reduce using rule 90 (factor -> LPAREN expr RPAREN .)
+    MINUS           reduce using rule 90 (factor -> LPAREN expr RPAREN .)
+    RPAREN          reduce using rule 90 (factor -> LPAREN expr RPAREN .)
+    COMMA           reduce using rule 90 (factor -> LPAREN expr RPAREN .)
+
+
+state 150
+
+    (34) insert_statement -> INSERT ID LPAREN id_list RPAREN VALUES LPAREN . expr_list RPAREN
+    (35) insert_statement -> INSERT ID LPAREN id_list RPAREN VALUES LPAREN . expr_list RPAREN SEMI
+    (79) expr_list -> . expr
+    (80) expr_list -> . expr_list COMMA expr
+    (81) expr -> . expr PLUS term
+    (82) expr -> . expr MINUS term
+    (83) expr -> . term
+    (84) expr -> . ID
+    (85) expr -> . STRING
+    (86) term -> . term TIMES factor
+    (87) term -> . term DIVIDE factor
+    (88) term -> . factor
+    (89) factor -> . NUMBER
+    (90) factor -> . LPAREN expr RPAREN
+
+    ID              shift and go to state 69
+    STRING          shift and go to state 74
+    NUMBER          shift and go to state 72
+    LPAREN          shift and go to state 71
+
+    expr                           shift and go to state 68
+    expr_list                      shift and go to state 159
+    factor                         shift and go to state 73
+    term                           shift and go to state 67
+
+state 151
+
+    (40) insert_statement -> INSERT INTO ID VALUES LPAREN expr_list RPAREN .
+    (41) insert_statement -> INSERT INTO ID VALUES LPAREN expr_list RPAREN . SEMI
+
+    INSERT          reduce using rule 40 (insert_statement -> INSERT INTO ID VALUES LPAREN expr_list RPAREN .)
+    SELECT          reduce using rule 40 (insert_statement -> INSERT INTO ID VALUES LPAREN expr_list RPAREN .)
+    SHOW            reduce using rule 40 (insert_statement -> INSERT INTO ID VALUES LPAREN expr_list RPAREN .)
+    CREATE          reduce using rule 40 (insert_statement -> INSERT INTO ID VALUES LPAREN expr_list RPAREN .)
+    DELETE          reduce using rule 40 (insert_statement -> INSERT INTO ID VALUES LPAREN expr_list RPAREN .)
+    UPDATE          reduce using rule 40 (insert_statement -> INSERT INTO ID VALUES LPAREN expr_list RPAREN .)
+    $end            reduce using rule 40 (insert_statement -> INSERT INTO ID VALUES LPAREN expr_list RPAREN .)
+    SEMI            shift and go to state 160
+
+
+state 152
+
+    (36) insert_statement -> INSERT INTO ID LPAREN id_list RPAREN VALUES . LPAREN expr_list RPAREN
+    (37) insert_statement -> INSERT INTO ID LPAREN id_list RPAREN VALUES . LPAREN expr_list RPAREN SEMI
+
+    LPAREN          shift and go to state 161
+
+
+state 153
+
+    (75) opt_orderby_clause -> ORDER BY . ID
+
+    ID              shift and go to state 162
+
+
+state 154
+
+    (49) select_statement -> SELECT select_columns FROM ID opt_where_clause opt_orderby_clause SEMI .
+
+    INSERT          reduce using rule 49 (select_statement -> SELECT select_columns FROM ID opt_where_clause opt_orderby_clause SEMI .)
+    SELECT          reduce using rule 49 (select_statement -> SELECT select_columns FROM ID opt_where_clause opt_orderby_clause SEMI .)
+    SHOW            reduce using rule 49 (select_statement -> SELECT select_columns FROM ID opt_where_clause opt_orderby_clause SEMI .)
+    CREATE          reduce using rule 49 (select_statement -> SELECT select_columns FROM ID opt_where_clause opt_orderby_clause SEMI .)
+    DELETE          reduce using rule 49 (select_statement -> SELECT select_columns FROM ID opt_where_clause opt_orderby_clause SEMI .)
+    UPDATE          reduce using rule 49 (select_statement -> SELECT select_columns FROM ID opt_where_clause opt_orderby_clause SEMI .)
+    $end            reduce using rule 49 (select_statement -> SELECT select_columns FROM ID opt_where_clause opt_orderby_clause SEMI .)
+
+
+state 155
+
+    (28) qualification_list -> qualification_spec qualification_list .
+
+    COMMA           reduce using rule 28 (qualification_list -> qualification_spec qualification_list .)
+    RPAREN          reduce using rule 28 (qualification_list -> qualification_spec qualification_list .)
+
+
+state 156
+
+    (31) qualification_spec -> PRIMARY KEY .
+
+    NOT             reduce using rule 31 (qualification_spec -> PRIMARY KEY .)
+    PRIMARY         reduce using rule 31 (qualification_spec -> PRIMARY KEY .)
+    COMMA           reduce using rule 31 (qualification_spec -> PRIMARY KEY .)
+    RPAREN          reduce using rule 31 (qualification_spec -> PRIMARY KEY .)
+
+
+state 157
+
+    (30) qualification_spec -> NOT NULL .
+
+    NOT             reduce using rule 30 (qualification_spec -> NOT NULL .)
+    PRIMARY         reduce using rule 30 (qualification_spec -> NOT NULL .)
+    COMMA           reduce using rule 30 (qualification_spec -> NOT NULL .)
+    RPAREN          reduce using rule 30 (qualification_spec -> NOT NULL .)
+
+
+state 158
+
+    (71) scalar_exp -> LPAREN scalar_exp . RPAREN
+    (66) scalar_exp -> scalar_exp . PLUS scalar_exp
+    (67) scalar_exp -> scalar_exp . MINUS scalar_exp
+    (68) scalar_exp -> scalar_exp . TIMES scalar_exp
+    (69) scalar_exp -> scalar_exp . DIVIDE scalar_exp
+
+    RPAREN          shift and go to state 128
+    PLUS            shift and go to state 101
+    MINUS           shift and go to state 106
+    TIMES           shift and go to state 98
+    DIVIDE          shift and go to state 105
+
+
+state 159
+
+    (34) insert_statement -> INSERT ID LPAREN id_list RPAREN VALUES LPAREN expr_list . RPAREN
+    (35) insert_statement -> INSERT ID LPAREN id_list RPAREN VALUES LPAREN expr_list . RPAREN SEMI
+    (80) expr_list -> expr_list . COMMA expr
+
+    RPAREN          shift and go to state 163
+    COMMA           shift and go to state 115
+
+
+state 160
+
+    (41) insert_statement -> INSERT INTO ID VALUES LPAREN expr_list RPAREN SEMI .
+
+    INSERT          reduce using rule 41 (insert_statement -> INSERT INTO ID VALUES LPAREN expr_list RPAREN SEMI .)
+    SELECT          reduce using rule 41 (insert_statement -> INSERT INTO ID VALUES LPAREN expr_list RPAREN SEMI .)
+    SHOW            reduce using rule 41 (insert_statement -> INSERT INTO ID VALUES LPAREN expr_list RPAREN SEMI .)
+    CREATE          reduce using rule 41 (insert_statement -> INSERT INTO ID VALUES LPAREN expr_list RPAREN SEMI .)
+    DELETE          reduce using rule 41 (insert_statement -> INSERT INTO ID VALUES LPAREN expr_list RPAREN SEMI .)
+    UPDATE          reduce using rule 41 (insert_statement -> INSERT INTO ID VALUES LPAREN expr_list RPAREN SEMI .)
+    $end            reduce using rule 41 (insert_statement -> INSERT INTO ID VALUES LPAREN expr_list RPAREN SEMI .)
+
+
+state 161
+
+    (36) insert_statement -> INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN . expr_list RPAREN
+    (37) insert_statement -> INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN . expr_list RPAREN SEMI
+    (79) expr_list -> . expr
+    (80) expr_list -> . expr_list COMMA expr
+    (81) expr -> . expr PLUS term
+    (82) expr -> . expr MINUS term
+    (83) expr -> . term
+    (84) expr -> . ID
+    (85) expr -> . STRING
+    (86) term -> . term TIMES factor
+    (87) term -> . term DIVIDE factor
+    (88) term -> . factor
+    (89) factor -> . NUMBER
+    (90) factor -> . LPAREN expr RPAREN
+
+    ID              shift and go to state 69
+    STRING          shift and go to state 74
+    NUMBER          shift and go to state 72
+    LPAREN          shift and go to state 71
+
+    expr                           shift and go to state 68
+    expr_list                      shift and go to state 164
+    factor                         shift and go to state 73
+    term                           shift and go to state 67
+
+state 162
+
+    (75) opt_orderby_clause -> ORDER BY ID .
+
+    SEMI            reduce using rule 75 (opt_orderby_clause -> ORDER BY ID .)
+    INSERT          reduce using rule 75 (opt_orderby_clause -> ORDER BY ID .)
+    SELECT          reduce using rule 75 (opt_orderby_clause -> ORDER BY ID .)
+    SHOW            reduce using rule 75 (opt_orderby_clause -> ORDER BY ID .)
+    CREATE          reduce using rule 75 (opt_orderby_clause -> ORDER BY ID .)
+    DELETE          reduce using rule 75 (opt_orderby_clause -> ORDER BY ID .)
+    UPDATE          reduce using rule 75 (opt_orderby_clause -> ORDER BY ID .)
+    $end            reduce using rule 75 (opt_orderby_clause -> ORDER BY ID .)
+
+
+state 163
+
+    (34) insert_statement -> INSERT ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN .
+    (35) insert_statement -> INSERT ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN . SEMI
+
+    INSERT          reduce using rule 34 (insert_statement -> INSERT ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN .)
+    SELECT          reduce using rule 34 (insert_statement -> INSERT ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN .)
+    SHOW            reduce using rule 34 (insert_statement -> INSERT ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN .)
+    CREATE          reduce using rule 34 (insert_statement -> INSERT ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN .)
+    DELETE          reduce using rule 34 (insert_statement -> INSERT ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN .)
+    UPDATE          reduce using rule 34 (insert_statement -> INSERT ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN .)
+    $end            reduce using rule 34 (insert_statement -> INSERT ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN .)
+    SEMI            shift and go to state 165
+
+
+state 164
+
+    (36) insert_statement -> INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN expr_list . RPAREN
+    (37) insert_statement -> INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN expr_list . RPAREN SEMI
+    (80) expr_list -> expr_list . COMMA expr
+
+    RPAREN          shift and go to state 166
+    COMMA           shift and go to state 115
+
+
+state 165
+
+    (35) insert_statement -> INSERT ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI .
+
+    INSERT          reduce using rule 35 (insert_statement -> INSERT ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI .)
+    SELECT          reduce using rule 35 (insert_statement -> INSERT ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI .)
+    SHOW            reduce using rule 35 (insert_statement -> INSERT ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI .)
+    CREATE          reduce using rule 35 (insert_statement -> INSERT ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI .)
+    DELETE          reduce using rule 35 (insert_statement -> INSERT ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI .)
+    UPDATE          reduce using rule 35 (insert_statement -> INSERT ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI .)
+    $end            reduce using rule 35 (insert_statement -> INSERT ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI .)
+
+
+state 166
+
+    (36) insert_statement -> INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN .
+    (37) insert_statement -> INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN . SEMI
+
+    INSERT          reduce using rule 36 (insert_statement -> INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN .)
+    SELECT          reduce using rule 36 (insert_statement -> INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN .)
+    SHOW            reduce using rule 36 (insert_statement -> INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN .)
+    CREATE          reduce using rule 36 (insert_statement -> INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN .)
+    DELETE          reduce using rule 36 (insert_statement -> INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN .)
+    UPDATE          reduce using rule 36 (insert_statement -> INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN .)
+    $end            reduce using rule 36 (insert_statement -> INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN .)
+    SEMI            shift and go to state 167
+
+
+state 167
+
+    (37) insert_statement -> INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI .
+
+    INSERT          reduce using rule 37 (insert_statement -> INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI .)
+    SELECT          reduce using rule 37 (insert_statement -> INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI .)
+    SHOW            reduce using rule 37 (insert_statement -> INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI .)
+    CREATE          reduce using rule 37 (insert_statement -> INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI .)
+    DELETE          reduce using rule 37 (insert_statement -> INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI .)
+    UPDATE          reduce using rule 37 (insert_statement -> INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI .)
+    $end            reduce using rule 37 (insert_statement -> INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN expr_list RPAREN SEMI .)
+
